@@ -11,10 +11,10 @@
 development:
   adapter: postgresql
   encoding: unicode
-  database: tyroper_development
+  database: tyroper
   pool: 5
   username: tyroper
-  password:
+  password: tyroper
 
   # Connect on a TCP socket. Omitted by default since the client uses a
   # domain socket that doesn't need configuration. Windows does not have
@@ -37,15 +37,15 @@ development:
 test:
   adapter: postgresql
   encoding: unicode
-  database: tyroper_test
+  database: tyroper
   pool: 5
   username: tyroper
-  password:
+  password: tyroper
 
 production:
   adapter: postgresql
   encoding: unicode
-  database: tyroper_production
+  database: tyroper
   pool: 5
   username: tyroper
-  password:
+  password: tyroper
