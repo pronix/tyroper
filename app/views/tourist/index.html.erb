@@ -1,2 +1,8 @@
-<h1>Tourist#index</h1>
-<p>Find me in app/views/tourist/index.html.erb</p>
+<% @tourists.each do |t| %>
+  <div id='tourist_#{t.id}'>
+  <%= t.surname_kir %>
+  <%= t.name_kir %>
+  <%= t.phone %>
+  </div>
+<% end %>
+<%= will_paginate @tourists %>

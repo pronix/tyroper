@@ -1,7 +1,7 @@
 class CreateCountries < ActiveRecord::Migration
   def self.up
     create_table :countries do |t|
-      t.test :name
+      t.text :name
 
       t.timestamps
     end
