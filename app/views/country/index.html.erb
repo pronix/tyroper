@@ -1,2 +1,6 @@
-<h1>Country#index</h1>
-<p>Find me in app/views/country/index.html.erb</p>
+<%= grid(@country_grid) do |t| 
+  t.column :column_name => 'Название' do |c|
+    link_to c.name, :controller => 'country', :action => 'edit', :id => c.id
+  end
+end -%>
+<%= link_to 'Новая страна', :action => 'new' %>

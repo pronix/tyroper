@@ -9,6 +9,9 @@ class CreateUsers < ActiveRecord::Migration
       t.column :updated_at,                :datetime
       t.column :remember_token,            :string
       t.column :remember_token_expires_at, :datetime
+      t.column :description,               :string
+      t.column :admin,                     :boolean, :default => false
+      t.column :active,                    :boolean, :default => true
     end
   end
 

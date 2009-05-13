@@ -1,7 +1,30 @@
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+1:
+  id: 1
+  name: kiev 
+  country_id: 4
+2:
+  id: 2
+  name: moscow 
+  country_id: 5
+3: 
+  id: 3
+  name: lviv 
+  country_id: 4
 
-# one:
-#   column: value
-#
-# two:
-#   column: value
+4:
+  id: 4
+  name: чернобыль 
+  country_id: 4
+
+5:
+  id: 5
+  name: Прага 
+  country_id: 1
+
+6: 
+  id: 6
+  name: Варшава
+  country_id: 2
+
+
+ 

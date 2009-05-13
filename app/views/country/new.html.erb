@@ -1,2 +1,5 @@
-<h1>Country#new</h1>
-<p>Find me in app/views/country/new.html.erb</p>
+<% form_for :country,@country, :url => { :controller => 'country', :action => 'save'} do |t| %>
+  <%= t.text_field :name , :value => 'Название', :onfocus => "this.value=''" %>
+  <%= submit_tag "Сохранить" %>
+<% end %>
+<%= link_to 'Отменить', :action => 'index' %>

@@ -1,8 +1,23 @@
-<% @tourists.each do |t| %>
-  <div id='tourist_#{t.id}'>
-  <%= t.surname_kir %>
-  <%= t.name_kir %>
-  <%= t.phone %>
-  </div>
-<% end %>
-<%= will_paginate @tourists %>
+<%= grid(@tourists_grid, :show_filters => :always) do |t| 
+
+  t.column :column_name => 'Фамилия', :attribute_name => 'surname_kir'  do |c|
+    c.surname_kir
+  end
+
+  t.column :column_name => 'Имя', :attribute_name => 'name_kir'  do |c|
+    c.name_kir
+  end
+
+  t.column :column_name => 'Отчество', :attribute_name => 'ot4_kir' do |c|
+    c.ot4_kir
+  end
+
+  t.column :column_name => 'Дата рождения', :attribute_name => 'borndate' do |c|
+    c.borndate
+  end
+
+  t.column :cplumn_name => 'Создатель', :attribute_name => 'login',   :model_class => User do |c|
+    c.user.login
+  end
+
+end -%>

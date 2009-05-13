@@ -9,16 +9,24 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 9) do
+ActiveRecord::Schema.define(:version => 11) do
+
+  create_table "attachments", :force => true do |t|
+    t.text     "name"
+    t.text     "content_type"
+    t.integer  "travel_id"
+    t.binary   "data"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "cities", :force => true do |t|
-    t.text "name", :null => false
+    t.text    "name",       :null => false
+    t.integer "country_id", :null => false
   end
 
   create_table "countries", :force => true do |t|
-    t.text     "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.text "name"
   end
 
   create_table "foodtypes", :force => true do |t|
@@ -27,8 +35,10 @@ ActiveRecord::Schema.define(:version => 9) do
   end
 
   create_table "hotels", :force => true do |t|
-    t.text "name",        :null => false
-    t.text "description"
+    t.text    "name",        :null => false
+    t.text    "description"
+    t.integer "city_id",     :null => false
+    t.integer "country_id",  :null => false
   end
 
   create_table "roomtypes", :force => true do |t|
@@ -40,7 +50,7 @@ ActiveRecord::Schema.define(:version => 9) do
     t.text     "name_kir"
     t.text     "ot4_kir"
     t.text     "surname_kir"
-    t.boolean  "sex"
+    t.text     "sex"
     t.text     "name_lat"
     t.text     "surname_lat"
     t.date     "borndate"
@@ -49,25 +59,52 @@ ActiveRecord::Schema.define(:version => 9) do
     t.integer  "seriya_zag_pasp"
     t.integer  "nomer_zag_pasp"
     t.text     "phone"
+    t.integer  "user_id",         :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "travelpoints", :force => true do |t|
-    t.integer  "city_id"
+    t.integer  "city_id",     :null => false
     t.integer  "country_id",  :null => false
     t.integer  "hotel_id",    :null => false
     t.integer  "roomtype_id"
     t.integer  "foodtype_id"
     t.date     "date_start"
     t.date     "date_end"
+    t.integer  "travel_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "travels", :force => true do |t|
-    t.binary   "platezhka"
-    t.binary   "podtver"
+    t.integer  "cena"
+    t.text     "predoplata"
+    t.text     "predoplata_type"
+    t.text     "doplata"
+    t.text     "doplata_type"
+    t.text     "description"
+    t.integer  "podtv"
+    t.integer  "s4et"
+    t.integer  "platezhka"
+    t.integer  "pay_tourist_id"
+    t.integer  "user_id"
+    t.text     "tourists_array"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "tyropers", :force => true do |t|
+    t.text     "name"
+    t.text     "shortname"
+    t.text     "adress"
+    t.text     "mailadress"
+    t.integer  "mbt"
+    t.integer  "finobes"
+    t.text     "dogovor"
+    t.text     "orgfinobes"
+    t.text     "adressfinobes"
+    t.text     "mailadressfinobes"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -81,6 +118,9 @@ ActiveRecord::Schema.define(:version => 9) do
     t.datetime "updated_at"
     t.string   "remember_token"
     t.datetime "remember_token_expires_at"
+    t.string   "description"
+    t.boolean  "admin",                                   :default => false
+    t.boolean  "active",                                  :default => true
   end
 
 end

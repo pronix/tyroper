@@ -1,13 +1,31 @@
-<% form_tag do -%>
-<p><label for="login">Login</label><br/>
-<%= text_field_tag 'login' %></p>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="Content-Language" content="ru">
+    <title>Твой Мир</title>
+    <%= stylesheet_link_tag 'login' %>
+      </head><body id="library">
+      <div align="center" id="container">
+        <div id="header">
+          <h1>Твой Мир</h1>
+        </div>
+        <div id="bl_line"></div>
+        <div id="content">
+          
+          <% form_tag do -%>
+            <p><label for="login">Login</label><br/>
+            <%= text_field_tag 'login' %></p>
+            
+            <p><label for="password">Password</label><br/>
+            <%= password_field_tag 'password' %></p>
+            
+            <p><label for="remember_me">Remember me:</label>
+            <%= check_box_tag 'remember_me' %></p>
+          <p><%= submit_tag 'Log in' %></p>
+        <% end -%>
 
-<p><label for="password">Password</label><br/>
-<%= password_field_tag 'password' %></p>
+      </div>
+      <div id="sidebar"></div>
+</div>
+</body></html>
 
-<!-- Uncomment this if you want this functionality -->
-<p><label for="remember_me">Remember me:</label>
-<%= check_box_tag 'remember_me' %></p>
-
-<p><%= submit_tag 'Log in' %></p>
-<% end -%>

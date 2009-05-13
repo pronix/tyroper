@@ -1,4 +1,5 @@
 class Hotel < ActiveRecord::Base
   belongs_to :city
-  has_one :country, through => :city
+  belongs_to :country
+  has_many :travelpoint
 end

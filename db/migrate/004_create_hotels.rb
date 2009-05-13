@@ -3,6 +3,8 @@ class CreateHotels < ActiveRecord::Migration
     create_table :hotels do |t|
       t.text :name, :null => false
       t.text :description
+      t.integer :city_id, :null => false
+      t.integer :country_id , :null => false
     end
   end
 

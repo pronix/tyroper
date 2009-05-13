@@ -1,8 +1,15 @@
 class TouristController < ApplicationController
   def index
     #@tourists = Tourist.find(:all)
-    params[:page] ||= 1
-    @tourists = Tourist.paginate :page => params[:page], :order => 'id DESC'
+    # params[:page] ||= 1
+    # @tourists = Tourist.paginate :page => params[:page], :order => 'id DESC'
+
+    @tourists_grid = initialize_grid(Tourist,
+                                    :per_page => 20,
+                                    :order => 'created_at',
+                                    :order_direction => 'desc',
+                                    :include => :user
+                                    )
 
   end
 
@@ -16,7 +23,7 @@ class TouristController < ApplicationController
   def save
     # newt = newtourist
     @newt = Tourist.new(params[:tourist])
-    @newt.user_id = current_user.id
+    @newt.user_id = session[:user]
     @newt.save!
     redirect_to :action => 'view', :id => @newt.id
   end

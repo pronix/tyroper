@@ -12,5 +12,11 @@
 <p><label for="password_confirmation">Confirm Password</label><br/>
 <%= f.password_field :password_confirmation %></p>
 
+<p><label for="description">Дополнительно</label><br/>
+<%= f.text_area :description, :col => 30, :rows => 5 %></p>
+
+<p><label for="admin">Права администратора</label><br/>
+<%= check_box('user','admin') %></p>
+
 <p><%= submit_tag 'Sign up' %></p>
 <% end -%>

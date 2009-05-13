@@ -1,0 +1,4 @@
+<% form_for @rtype, :url => {:controller => 'roomtype', :action => 'update', :id => @rtype.id } do |f| %>
+  <%= f.text_field :name %>
+  <%= submit_tag "Сохранить" %>
+<% end %>

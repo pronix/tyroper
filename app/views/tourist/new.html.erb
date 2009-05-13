@@ -1,2 +1,16 @@
-<h1>Tourist#new</h1>
-<p>Find me in app/views/tourist/new.html.erb</p>
+<% form_for :tourist, :url => { :controller => 'tourist', :action => 'save'} do |t| %>
+  <%= t.text_field :surname_kir,  :value => 'Фамилия кириллица',  :onfocus => "this.value=''" %>
+  <%= t.text_field :name_kir,     :value => 'Имя кириллица',      :onfocus => "this.value=''" %>
+  <%= t.text_field :ot4_kir ,     :value => 'Отчество кириллица', :onfocus => "this.value=''" %>
+  <%= t.text_field :name_lat,     :value => 'Имя латиница',       :onfocus => "this.value=''" %>
+  <%= t.text_field :surname_lat,  :value => 'Имя латиница',       :onfocus => "this.value=''" %>
+  <%= select('tourist','sex',['Женщина','Мужчина','Ребенок']) %>
+  <%= calendar_date_select_tag "tourist[borndate]","date_end" %>
+  <%= t.text_field :reklama %>
+  <%= t.text_area :pasport_ros %>
+  <%= t.text_field :seriya_zag_pasp %>
+  <%= t.text_field :nomer_zag_pasp %>
+  <%= t.text_field :phone %>
+<%= submit_tag "Сохранить" %>
+<% end %>
+

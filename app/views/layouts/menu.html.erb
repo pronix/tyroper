@@ -6,31 +6,55 @@
     <meta http-equiv="Content-Language" content="ru" />
     <title>Твой Мир</title>
     <%= javascript_include_tag :defaults %>
-    <%= stylesheet_link_tag "menu" %>
+    <%= javascript_include_tag 'scriptaculous' %>
+    <%= calendar_date_select_includes 'blue' , :locale => 'ru'%>
+    <%= include_wice_grid_assets %>
+    <%= stylesheet_link_tag "style" %>
+    <%= stylesheet_link_tag "menu" -%>
     </head>
     <body>
-      <div>
+      <div  align="center" id="container">
         <div id="header">
-          <span class='logo'>
-            <%= image_tag 'rails.png', :height => "40", :border => "0", :alt => "Company Logo" %>
-          </span>
-          <span class='welcome'>
-           Добро пожаловать: <%= session[:login] %>
-           <%= link_to "Выход", :controller => "account", :action => "logout" %>
-          </span>
+          <div id="logged_in">
+            <table width="200px" border="0" cellpadding="0" cellspacing="5">
+              <tr><td>
+                  <%= image_tag 'rails.png', :height => "40", :border => "0", :alt => "Company Logo" %></td><td><p>Добро пожаловать: <%= session[:login] %><br /><%= link_to "Выход", :controller => "account", :action => "logout" %></p></td></tr></table></div>
 
           <h1>Твой Мир</h1>
           <!-- вставить закладки для навигации по функциям -->
+          <div id='panel'>
+            <%= link_to "Сделка",:controller => 'travel', :action => 'index' %> 
+            <%= link_to "Туристы", :controller => 'tourist', :action => 'index' %>
+            <%= link_to "Отчеты", :controller => 'travel', :action => 'summ' %>
+            <%= link_to "Страны", :controller => 'country', :action => 'index' %>
+            <%= link_to "Города", :controller => 'city', :action => 'index' %>
+            <%= link_to "Гостиницы",:controller => 'hotel', :action => 'index' %>
+            <%= link_to "Тип питани", :controller => 'foodtype', :action => 'index' %>
+            <%= link_to "Тип комнаты", :controller => 'roomtype', :action => 'index' %>
+            <%= link_to "Сотрудники",:controller => 'account', :action => 'list' %>
+            <%= link_to "Туроператоры", :controller => 'tyropers', :action => 'index' %>
+          </div>
+          <% if flash[:notice] %>
+            <div class="notice"><%= flash[:notice] %></div>
+          <% end %>
+          <% if flash[:error] %>
+          <div class="error"><%= flash[:error] %></div>
+        <% end %>
+
         </div>
         <div id='menul'>
           <!-- меню слева от основной информации-->
-          <%= link_to "Создать туриста", :controller => "tourist", :action => 'new' %>
-          <%= link_to "Создать сделку", :controller => "travel", :action => 'new' %>
+          <ul>
+            <li id="lc"><%= link_to "Создать туриста", :controller => "tourist", :action => 'new' %></li>
+            <li id="lc"><%= link_to "Создать сделку", :controller => "travel", :action => 'new' %></li>
+          </ul>
         </div>
 
+        <div id="content_block">
           <div id="content">
 
             <%= yield -%>
+          </div>
           </div>
           <div id="sidebar"></div>
       </div>

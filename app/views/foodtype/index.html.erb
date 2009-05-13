@@ -1,0 +1,11 @@
+<%= grid(@ftype_grid) do |t| 
+  t.column :column_name => 'ID' do |c|
+    link_to c.id , :controller => 'foodtype', :action => 'edit', :id => c.id
+  end
+  t.column :column_name => 'Название' do |c|
+    link_to c.name , :controller => 'foodtype', :action => 'edit', :id => c.id
+  end
+
+end -%>
+
+<%= link_to "Добавить тип питания", :controller => 'foodtype', :action => 'new' %>

@@ -1,0 +1,1 @@
+<%= select("travel[travelpoint#{@nom}]",'hotel_id', @hotel.collect { |p| [p.name, p.id]}) %>

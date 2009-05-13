@@ -1,0 +1,38 @@
+<h1>Listing tyropers</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Shortname</th>
+    <th>Adress</th>
+    <th>Mailadress</th>
+    <th>Mbt</th>
+    <th>Finobes</th>
+    <th>Dogovor</th>
+    <th>Orgfinobes</th>
+    <th>Adressfinobes</th>
+    <th>Mailadressfinobes</th>
+  </tr>
+
+<% @tyropers.each do |tyroper| %>
+  <tr>
+    <td><%=h tyroper.name %></td>
+    <td><%=h tyroper.shortname %></td>
+    <td><%=h tyroper.adress %></td>
+    <td><%=h tyroper.mailadress %></td>
+    <td><%=h tyroper.mbt %></td>
+    <td><%=h tyroper.finobes %></td>
+    <td><%=h tyroper.dogovor %></td>
+    <td><%=h tyroper.orgfinobes %></td>
+    <td><%=h tyroper.adressfinobes %></td>
+    <td><%=h tyroper.mailadressfinobes %></td>
+    <td><%= link_to 'Show', tyroper %></td>
+    <td><%= link_to 'Edit', edit_tyroper_path(tyroper) %></td>
+    <td><%= link_to 'Destroy', tyroper, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'Добавить туроператора', new_tyroper_path %>

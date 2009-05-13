@@ -4,15 +4,16 @@ class CreateTourists < ActiveRecord::Migration
       t.text :name_kir
       t.text :ot4_kir
       t.text :surname_kir
-      t.boolean :sex
+      t.text :sex
       t.text :name_lat
       t.text :surname_lat
       t.date :borndate
-      t.text :reklama
+      t.text :reklama 
       t.text :pasport_ros
       t.integer :seriya_zag_pasp
       t.integer :nomer_zag_pasp
       t.text :phone  
+      t.integer :user_id, :null => false
       t.timestamps
     end
   end

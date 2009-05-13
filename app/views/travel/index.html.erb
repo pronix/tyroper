@@ -1,2 +1,16 @@
-<h1>Travel#index</h1>
-<p>Find me in app/views/travel/index.html.erb</p>
+<%= grid(@travels_grid) do |g|
+
+  g.column :column_name => 'Номер сделки', :attribute_name => 'id' do |travel|
+    travel.id
+  end
+
+  g.column :column_name => 'Цена', :attribute_name => 'cena' do |travel|
+    travel.cena
+  end
+
+  g.column :column_name => 'Плательщик', :attribute_name => 'pay_tourist_id' do |travel|
+    Tourist.find_by_id(travel.pay_tourist_id).surname_kir
+  end
+
+end -%>
+

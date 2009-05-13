@@ -1,0 +1,63 @@
+<h1>Новый туроператор</h1>
+
+<% form_for(@tyroper) do |f| %>
+  <%= f.error_messages %>
+
+  <table>
+    <tr>
+      <td>
+    <%= f.label 'Полное наименование' %><br />
+    <%= f.text_area :name ,:cols => 40, :rows => 5, :value => "Полное наименование"  %>
+  </td>
+  <td>
+    <%= f.label 'Сокращенное наименование' %><br />
+    <%= f.text_area :shortname ,:cols => 40, :rows => 5, :value => "Сокращенное наименование"  %>
+  </td>
+  <td>
+    <%= f.label "Адрес" %><br />
+    <%= f.text_area :adress ,:cols => 40, :rows => 5, :value => "Адрес"  %>
+  </td>
+</tr>
+<tr>
+    <td>
+    <%= f.label "Почтовый адрес" %><br />
+    <%= f.text_area :mailadress ,:cols => 40, :rows => 5, :value => "Почтовый адрес"  %>
+  </td>
+  <td>
+    <%= f.label "Реестровый номер(MBT)" %><br />
+    <%= f.text_area :mbt ,:cols => 40, :rows => 5, :value => "Реестровый номер(MBT)"  %>
+  </td>
+  <td>
+    <%= f.label "Вид и размер фин.обеспечения" %><br />
+    <%= f.text_area :finobes ,:cols => 40, :rows => 5, :value => "Вид и размер фин.обеспечения"  %>
+  </td>
+</tr>
+<tr>
+  <td>
+    <%= f.label "Договор страхования" %><br />
+    <%= f.text_area :dogovor ,:cols => 40, :rows => 5, :value => "Договор страхования"  %>
+  </td>
+  <td>
+    <%= f.label "Страховщик" %><br />
+    <%= f.text_area :orgfinobes ,:cols => 40, :rows => 5, :value => "Страховщик"  %>
+  </td>
+  <td>
+    <%= f.label "Адрес страховщика" %><br />
+    <%= f.text_area :adressfinobes ,:cols => 40, :rows => 5, :value => "Адрес страховщика"  %>
+  </td>
+</tr>
+<tr>
+  <td>
+    <%= f.label "Почтвой адрес страховщика" %><br />
+    <%= f.text_area :mailadressfinobes ,:cols => 40, :rows => 5, :value => "Почтвой адрес страховщика"  %>
+  </td>
+</tr>
+<tr>
+  <td>
+    <%= f.submit 'Create' %>
+  </td>
+</tr>
+</table>
+<% end %>
+
+<%= link_to 'Back', tyropers_path %>
