@@ -2,13 +2,16 @@
     <% if @tp == 0 %>
       <p><span class="country">Страна</span><span class="city">Город</span><span class="hotel">Гостиница</span><span class="roomtype">Тип комнаты</span><span class="foodtype">Тип питания</span><span class="date_start">прибытие</span><span class="date_end">убытие</span></p>
     <% end %>
+
+      <input type="hidden" name="travel[travelpoint<%= @tp%>][id]" value="<%= @travelp.id %>" >
+
     <span id="country<%= @tp %>" class="country">
       <select id="travel_travelpoint<%=@tp%>_country_id" onchange="new Ajax.Updater('city<%=@tp%>', '/travelpoint/city_select/<%=@tp%>', {asynchronous:true, evalScripts:true, parameters:'item=' + value + '&authenticity_token=' + encodeURIComponent('a9Q/Hjrw3ePyGTWSakn3ilrjR76G+e6XdGJtlFmPqek=')})" name="travel[travelpoint<%=@tp%>][country_id]">
         <%=options_for_select(Country.find(:all).collect {|p| [p.name,p.id]}, @travelp.country.id )%>
     </select>
   </span>
         <span id="city<%= @tp %>" class="city">
-          <select id="travel_travelpoint<%= @tp %>_city_id" onchange="new Ajax.Updater('hotel<%= @tp %>', '/travelpoint/hotel_select/<%= @tp %>', {asynchronous:true, evalScripts:true, parameters:'item=' + value + '&authenticity_token=' + encodeURIComponent('a9Q/Hjrw3ePyGTWSakn3ilrjR76G+e6XdGJtlFmPqek=')})" name="travel[travelpoint0][city_id]">
+          <select id="travel_travelpoint<%= @tp %>_city_id" onchange="new Ajax.Updater('hotel<%= @tp %>', '/travelpoint/hotel_select/<%= @tp %>', {asynchronous:true, evalScripts:true, parameters:'item=' + value + '&authenticity_token=' + encodeURIComponent('a9Q/Hjrw3ePyGTWSakn3ilrjR76G+e6XdGJtlFmPqek=')})" name="travel[travelpoint<%= @tp%>][city_id]">
             <%=options_for_select(City.find(:all, :conditions => ["country_id = ?", @travelp.country.id ]).collect {|p| [p.name,p.id]}, @travelp.city.id )%>
         </select>
       </span>
@@ -23,15 +26,17 @@
     </select>
   </span>
   <span id="foodtype<%= @tp %>" class="foodtype">
-    <select id="travel_travelpoint0_foodtype_id" name="travel[travelpoint0][foodtype_id]">
+    <select id="travel_travelpoint<%= @tp %>_foodtype_id" name="travel[travelpoint<%= @tp%>][foodtype_id]">
       <%=options_for_select(Foodtype.find(:all).collect {|p| [p.name,p.id]}, @travelp.foodtype_id )%>
     </select>
   </span>
   <span id="date_start<%= @tp %>" class="date_start">
-    <input id="travel[travelpoint<%=@tp%>][date_start]" type="text" value="<%=@travelp.date_start%>" name="travel[travelpoint<%=@tp%>][date_start]"/>
+    <input id="travel[travelpoint<%=@tp%>][date_start]" type="text" value="<%=@travelp.date_start.to_s %>" name="travel[travelpoint<%=@tp%>][date_start]"/>
     <img class="calendar_date_select_popup_icon" style="border: 0px none ; cursor: pointer;" src="/images/calendar_date_select/calendar.gif?1241863028" onclick="new CalendarDateSelect( $(this).previous(), {year_range:10} );" alt="Calendar"/>
   </span>
   <span id="date_end<%= @tp %>" class="date_end">
-    <input id="travel[travelpoint<%=@tp%>][date_end]" type="text" value="<%=@travelp.date_end%>" name="travel[travelpoint<%=@tp%>][date_end]"/>
+    <input id="travel[travelpoint<%=@tp%>][date_end]" type="text" value="<%=@travelp.date_end.to_s %>" name="travel[travelpoint<%=@tp%>][date_end]"/>
     <img class="calendar_date_select_popup_icon" style="border: 0px none ; cursor: pointer;" src="/images/calendar_date_select/calendar.gif?1241863028" onclick="new CalendarDateSelect( $(this).previous(), {year_range:10} );" alt="Calendar"/>
-  </span></div>
+  </span>
+  <span id="del<%=@tp%>" onclick="<%=remote_function(:update => "del#{@tp}", :url => {:controller => 'travelpoint', :action => 'remove_tp', :id => @tp })%>">Удалить</span>
+</div>

@@ -1,0 +1,14 @@
+<% @xnum=2 %>
+<% @travel.tourists_array ||= ''  -%>
+<% @travel.tourists_array.split(',').each  do |x|  %>
+  <span id="tourist_input_<%=@xnum%>">
+    <span id="input_<%=@xnum%>"><input id="t<%=@xnum%>" name="travel[surname_kir<%=@xnum%>]" size="30" type="text" value="<%= Tourist.find(x).surname_kir + ' ' + Tourist.find(x).name_kir %>"/></span> 
+    <!--    <span id="tdel<%=@xnum%>" onclick="<%=remote_function(:update => "tdel#{@xnum}", :url => {:controller => 'travel', :action => 'remove_tourist', :id => @xnum })%>">Удалить</span> --> <br /><div id="tt<%=@xnum%>" class="auto_complete"></div>
+    <script type="text/javascript">
+      //<![CDATA[
+    var t<%=@xnum%>_auto_completer = new Ajax.Autocompleter('t<%=@xnum%>', 'tt<%=@xnum%>', '/travel/select_tourist', {})
+    //]]>
+</script>
+</span>
+<% @xnum+=1 %>
+<% end %>

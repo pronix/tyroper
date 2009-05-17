@@ -28,37 +28,39 @@
   <!-- добавление туристов в список едущих-->
   <div id='tourists_list'>
     <p onclick="new insertElement()">Добавить туриста</p>
-    <div id="input_1"><input id="t1" name="travel[surname_kir]" size="30" type="text" value="<%= @travel.tourist.surname_kir %>"/></div>
+    <span id="add_tourist_scr"></span>
+    <div id="input_1"><input id="t1" name="travel[surname_kir]" size="30" type="text" value="<%= @travel.tourist.surname_kir + " " + @travel.tourist.name_kir %>"/></div>
     <div id="tt1" class="auto_complete"></div>
       <%= auto_complete_field  't1', :update =>  'tt1', :url => { :action => 'select_tourist'} %>
-      <% @xnum=2 %>
-      <% @travel.tourists_array.split(',').each  do |x| %>
-        <div id="input_<%=@xnum%>"><input id="t<%=@xnum%>" name="travel[surname_kir<%=@xnum%>]" size="30" type="text" value="<%= x %>"/></div><div id="tt<%=@xnum%>" class="auto_complete"></div>
-        <script type="text/javascript">
-          //<![CDATA[
-        var t<%=@xnum%>_auto_completer = new Ajax.Autocompleter('t<%=@xnum%>', 'tt<%=@xnum%>', '/travel/select_tourist', {})
-        //]]>
-      </script>
-      <% @xnum+=1 %>
-      <% end %>
-
+      <%= render :partial => 'tourist_cicle' %>
+      <script language="JavaScript">
+        var clicknom = 2;
+        function insertElement() {
+          clicknom++; divid = "tourist_" + clicknom; div = document.getElementById("tourists_list"); jsnewel = '//<![CDATA[' + "\n"  + 'var t' + clicknom + '_auto_completer = new Ajax.Autocompleter(\'t'  + clicknom + '\', \'tt'  + clicknom + '\', \'/travel/select_tourist\', {})' + "\n" + '//]]>'; newel = Builder.node('div',{id:"input_"+clicknom},[Builder.node('input',{id:"t"+clicknom,name:'travel[surname_kir'+clicknom+']',size:'30',type:'text'})]); newel2 = Builder.node('div',{id:'tt'+clicknom,class:'auto_complete'}); newel3 = Builder.node('script',{type:'text/javascript'},[jsnewel]); div.appendChild(newel); div.appendChild(newel2); div.appendChild(newel3);
+          }
+        </script>
   </div>
 
   <!-- конец добавления в список едущих-->
   <!-- добавляем точки маршрута -->
   <% @tp = 0 %>
+  
+  <% unless  @travel.travelpoint.empty? %>
   <% @travel.travelpoint.each do |travelp| %>
     <% @travelp = travelp %>
     <%= render 'travelpoint/edit.html.erb' %>
     <% @tp+=1 %>
   <% end %>
+<% else %>
+ <div id="travp0"></div>
+<% end %>
 
 
 
 
   <span id="hotel_controller" onclick="new Hotelnom()">Add Hotel</span>
   <script language="JavaScript">
-    var hnom = 0;
+    var hnom = <%= @tp == 0 ? 0 : @tp-1 %>;
     function Hotelnom () {
       new Ajax.Request('/travelpoint/new_point/' + hnom , {asynchronous:true, evalScripts:true, parameters:'authenticity_token=' + encodeURIComponent('ht8fyKBVFZcXYnLk2S/5n4gmPDHlihvPqdCPtMVQodY=')});
       hnom++;
@@ -69,13 +71,15 @@
 
   <!-- все отели добавлены-->
   <!-- файлы подтверждающие оплату туриста-->
+  <!--
   <% t.fields_for :attachment_attributes, :multipart => true do %>
     <p><%= file_field_tag 'platezhka' %></p>
     <p><%= file_field_tag 'podtverzhd' %></p>
   <% end %>
-
+  -->
   <!-- файлы туриста закончены-->
   <!-- файлы туроператору-->
+  <!--
   <table>
     <tr>
       <td>Платежка</td>
@@ -86,6 +90,7 @@
       <td> <%= file_field_tag 'podtv_operatory' %></td>
     </tr>
   </table>
+  -->
    
   <!-- файлы туроператора закончены -->
   <p>Цена<input id="cena" name="travel[cena]" size="30" type="text" value="<%= @travel.cena %>"/></p>
@@ -107,7 +112,11 @@
           <tr>
 
             <td>Общая сумма</td><td><input type="text" readonly id="inputsum" size="30" value="<%= @travel.summa %>"></td>
-        </tr>
+          </tr>
+          <tr>
+          </tr>
+          <tr>
+            <td>Оплата оператору</td><td><%= t.text_field :tyroperator_pay, :value => @travel.tyroperator_pay  %></td>
       </table>
 
 
@@ -125,4 +134,20 @@
 
   <%= t.text_area :description, :value => @travel.description %>
 <%= submit_tag "Сохранить" %>
+<% end %>
+
+<% if @travel.podtv %>
+  <%= render :partial => 'travel/link_podtv' %>
+  <% if @travel.platezhka %>
+     <%= render :partial => 'travel/link_platezhka' %>
+         <% if @travel.s4et %>
+           <%= render :partial => 'travel/link_s4et' %>
+         <% else %>
+            <%= render :partial => 'travel/upload_s4et' %>
+         <%end%>
+   <% else %>  
+        <%= render :partial => 'travel/upload_platezhka' %>
+   <% end %>
+<% else %>
+   <%= render :partial => 'travel/upload_portv' %>
 <% end %>

@@ -1,0 +1,6 @@
+<% form_for :ot4, :url => {:controller => 'travel', :action => 'get_ot4'} do |t| %>
+  <%= select 'ot4','user_id', User.find(:all).collect {|p| [p.login, p.id]}, { :include_blank => true } %>
+  <%= select_month Date.today %>
+  <%= select_year Date.today, :start_year => 2008 %>
+<%= submit_tag "Сформировать отчет" %>
+<% end %>

@@ -9,4 +9,9 @@ class ApplicationController < ActionController::Base
   # Scrub sensitive parameters from your log
   # filter_parameter_logging :password
   layout 'menu.html.erb'
+
+  def month_now
+    ['Января','Февраля','Марта','Апреля','Мая','Июня','Июля','Августа','Сентября','Октября','Ноября','Декабря'][Time.now.mon]
+  end
+
 end

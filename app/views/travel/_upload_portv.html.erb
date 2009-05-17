@@ -1,0 +1,10 @@
+<% if User.find(session[:user]).admin? %>
+  <div id="podtv">
+  <p>Подтверждение</p>
+  <% form_for :file , :url =>{:controller => 'travel', :action => 'save_podtv', :id => params[:id] }, :html => { :multipart => true} do |form| %>
+  <%= form.file_field :uploaded_data %>
+  <%= submit_tag "Загрузить" %>
+<% end %>
+<iframe id='upload_frame' name="upload_frame" style="width:1px;height:1px;border:0px" src="about:blank"></iframe>
+</div>
+<% end %>

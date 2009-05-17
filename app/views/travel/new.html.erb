@@ -64,44 +64,6 @@
       new Ajax.Request('/travelpoint/new_point/' + hnom , {asynchronous:true, evalScripts:true, parameters:'authenticity_token=' + encodeURIComponent('ht8fyKBVFZcXYnLk2S/5n4gmPDHlihvPqdCPtMVQodY=')});hnom++;return false;
     }
   </script>
-  <!-- все отели добавлены-->
-  <!-- файлы подтверждающие оплату туриста-->
-  <% t.fields_for :attachment_attributes, :multipart => true do %>
-    <div style="float:left;">
-    <table class="tb_1_grey" cellpadding="0" cellspacing="0">
-      <tr>
-        <td colspan="2" class="td_1_grey">Документы туриста</td>
-      </tr>
-      <tr>
-        <td class="td_2_grey">Платежка</td><td><%= file_field_tag 'platezhka' %></td>
-      </tr>
-      <tr>
-        <td class="td_2_grey">Подтверждени</td><td><%= file_field_tag 'podtverzhd' %></td>
-      </tr>
-    </table>
-  </div>
-  <% end %>
-
-  <!-- файлы туриста закончены-->
-  <!-- файлы туроператору-->
-  <div style="float:right;">
-    <table class="tb_1_grey" cellpadding="0" cellspacing="0">
-      <tbody>
-        <tr>
-          <td colspan="2" class="td_1_grey">Документы оператору</td>
-        </tr>
-    <tr>
-      <td class="td_2_grey">Платежка</td>
-      <td> <%= file_field_tag 'platezh_operatory' %> </td>
-    </tr>
-    <tr>
-      <td class="td_2_grey">Подтверждение</td>
-      <td> <%= file_field_tag 'podtv_operatory' %></td>
-    </tr></tbody></table>
-</div>
-
-   
-<!-- файлы туроператора закончены -->
 <div id="wrap">
 </div>
 <table>
@@ -121,6 +83,10 @@
       <tr>
         <td>Общая сумма</td><td><input type="text" readonly id="inputsum" size="30"></td>
       </tr>
+      <tr/>
+        <tr>
+          <td>Оплата туроператору</td><td><%= t.text_field :tyroperator_pay%></td>
+          </tr>
     </table>
     <% javascript_tag :defer => 'defer' do -%>
       function SumVal () {
@@ -131,3 +97,4 @@
   <%= t.text_area :description %><br />
 <%= submit_tag "Сохранить" %>
 <% end %>
+

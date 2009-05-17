@@ -1,0 +1,8 @@
+<% if User.find(session[:user]).admin? %>
+  <p>Платежка</p>
+<% form_for :file , :url =>{:controller => 'travel', :action => 'save_plat', :id => params[:id]}, :html => { :multipart => true} do |form| %>
+  <%= form.file_field :uploaded_data %>
+  <%= submit_tag "Загрузить" %>
+<% end %>
+<iframe id='upload_platezh' name="upload_platezh" style="width:1px;height:1px;border:0px" src="about:blank"></iframe>
+<% end %>

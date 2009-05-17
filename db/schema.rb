@@ -78,17 +78,18 @@ ActiveRecord::Schema.define(:version => 11) do
   end
 
   create_table "travels", :force => true do |t|
-    t.integer  "cena"
-    t.text     "predoplata"
+    t.integer  "cena",            :null => false
+    t.integer  "predoplata"
     t.text     "predoplata_type"
-    t.text     "doplata"
+    t.integer  "doplata"
     t.text     "doplata_type"
     t.text     "description"
+    t.integer  "tyroperator_pay"
     t.integer  "podtv"
     t.integer  "s4et"
     t.integer  "platezhka"
-    t.integer  "pay_tourist_id"
-    t.integer  "user_id"
+    t.integer  "pay_tourist_id",  :null => false
+    t.integer  "user_id",         :null => false
     t.text     "tourists_array"
     t.datetime "created_at"
     t.datetime "updated_at"

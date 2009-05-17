@@ -1,6 +1,5 @@
 ActionController::Routing::Routes.draw do |map|
   map.resources :tyropers
-  map.resources :travel
 
 
   map.connect '/',      :controller => 'account', :action => 'login'

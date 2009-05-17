@@ -1,15 +1,42 @@
-<%= grid(@travels_grid) do |g|
+<% form_for :travel, :url => {:controller => 'travel', :action => 'find_by_tourist'} do |t| %>
 
-  g.column :column_name => 'Номер сделки', :attribute_name => 'id' do |travel|
-    travel.id
+  <div id="input_1"><%= t.text_field 'surname_kir', :id => 't1'%></div>
+  <div id="tt1" class="auto_complete"></div>
+  <%= auto_complete_field  't1', :update =>  'tt1', :url => { :action => 'select_tourist'} %>
+
+  <%#= t.text_field :surname_kir, :id => 't1'%>
+  <%#= auto_complete_field  't1', :update =>  'tt1', :url => { :action => 'select_tourist'} %>
+  <!-- <div id="tt1"></div> -->
+<%= submit_tag "Найти" %>
+<% end %>
+
+<%= grid(@travels_grid) do |g|
+=begin
+список сделок содержит (фамилия , номер договора, страна посещения(если несколько то экскурсионный тур),и то как он оплатил (если не оплати - красненькая, если предоплата желтенькая , если все оплатил то зелененькая), оплата туроператору (если ничего из документов от туроператора не загружено то красная, если загружено счет и подтверждение то зеленая*), менеджер)
+=end
+
+  g.column :column_name => 'Фамилия', :attribute_name => 'surname_kir', :model_class => Tourist do |travel|
+    link_to travel.tourist.surname_kir + " " + travel.tourist.name_kir , :controller => 'tourist', :action => 'view', :id => travel.tourist.id
+  end
+
+  g.column :column_name => 'Номер договора', :attribute_name => 'id' do |travel|
+    link_to travel.id, :controller => 'travel', :action => 'edit', :id => travel.id
+  end
+
+  g.column :column_name => 'Страна посещения' do |travel|
+    travel.country
+  end
+
+  g.column :column_name => 'Оплата' do |travel|
+    travel.paycolor
   end
 
   g.column :column_name => 'Цена', :attribute_name => 'cena' do |travel|
-    travel.cena
+    link_to travel.cena, :controller => 'travel', :action => 'edit', :id => travel.id
   end
 
-  g.column :column_name => 'Плательщик', :attribute_name => 'pay_tourist_id' do |travel|
-    Tourist.find_by_id(travel.pay_tourist_id).surname_kir
+  g.column :column_name => 'Ответственный', :attribute_name => 'login', :model_class => User do |travel|
+    travel.user.login
   end
 
 end -%>
