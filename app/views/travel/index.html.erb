@@ -20,7 +20,7 @@
   end
 
   g.column :column_name => 'Номер договора', :attribute_name => 'id' do |travel|
-    link_to travel.id, :controller => 'travel', :action => 'edit', :id => travel.id
+    link_to travel.id, :controller => 'travel', :action => 'view', :id => travel.id
   end
 
   g.column :column_name => 'Страна посещения' do |travel|
@@ -28,7 +28,7 @@
   end
 
   g.column :column_name => 'Оплата' do |travel|
-    travel.paycolor
+    image_tag "#{travel.paycolor}.jpg", :size => '20x20'
   end
 
   g.column :column_name => 'Цена', :attribute_name => 'cena' do |travel|

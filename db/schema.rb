@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 11) do
+ActiveRecord::Schema.define(:version => 12) do
 
   create_table "attachments", :force => true do |t|
     t.text     "name"
@@ -27,6 +27,22 @@ ActiveRecord::Schema.define(:version => 11) do
 
   create_table "countries", :force => true do |t|
     t.text "name"
+  end
+
+  create_table "customers", :force => true do |t|
+    t.text     "name"
+    t.text     "yur_adress"
+    t.text     "fiz_adress"
+    t.text     "phone"
+    t.text     "ogrn"
+    t.text     "inn"
+    t.text     "kpp"
+    t.text     "r_s4"
+    t.text     "bank"
+    t.text     "bik"
+    t.text     "director"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "foodtypes", :force => true do |t|
@@ -58,6 +74,7 @@ ActiveRecord::Schema.define(:version => 11) do
     t.text     "pasport_ros"
     t.integer  "seriya_zag_pasp"
     t.integer  "nomer_zag_pasp"
+    t.text     "actual_date_zag"
     t.text     "phone"
     t.integer  "user_id",         :null => false
     t.datetime "created_at"
@@ -85,9 +102,13 @@ ActiveRecord::Schema.define(:version => 11) do
     t.text     "doplata_type"
     t.text     "description"
     t.integer  "tyroperator_pay"
+    t.integer  "tyroper_id"
     t.integer  "podtv"
     t.integer  "s4et"
     t.integer  "platezhka"
+    t.integer  "podtv_tyr"
+    t.integer  "s4et_tyr"
+    t.integer  "platezhka_tyr"
     t.integer  "pay_tourist_id",  :null => false
     t.integer  "user_id",         :null => false
     t.text     "tourists_array"
@@ -122,6 +143,7 @@ ActiveRecord::Schema.define(:version => 11) do
     t.string   "description"
     t.boolean  "admin",                                   :default => false
     t.boolean  "active",                                  :default => true
+    t.integer  "customer_id",                             :default => 1
   end
 
 end

@@ -12,6 +12,7 @@ class CreateUsers < ActiveRecord::Migration
       t.column :description,               :string
       t.column :admin,                     :boolean, :default => false
       t.column :active,                    :boolean, :default => true
+      t.column :customer_id,               :integer, :default => 1
     end
   end
 

@@ -1,9 +1,13 @@
 class AccountController < ApplicationController
+
+
   layout 'menu', :except => [ :login, :chadmin, :chactive ]
   # Be sure to include AuthenticationSystem in Application Controller instead
   include AuthenticatedSystem
   # If you want "remember me" functionality, add this before_filter to Application Controller
   before_filter :login_from_cookie
+  before_filter :admin_required, :only => [:index, :list, :signup, :chactive, :chadmin]
+  
 
   # say something nice, you goof!  something sweet.
   def index
@@ -25,7 +29,7 @@ class AccountController < ApplicationController
         self.current_user.remember_me
         cookies[:auth_token] = { :value => self.current_user.remember_token , :expires => self.current_user.remember_token_expires_at }
       end
-      redirect_to( :action => 'index')
+      redirect_to( :controller => 'travel', :action => 'index')
       flash[:notice] = "Logged in successfully"
     end
   end

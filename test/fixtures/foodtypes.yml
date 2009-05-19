@@ -5,3 +5,8 @@
 #
 # two:
 #   column: value
+<% ['BB','HB','FB','BBT','HBT','FBT','ALL','UAL'].each do |x| %>
+<%= x %>:
+  name: <%= x %>
+<% end %>
+

@@ -67,32 +67,7 @@
       return false;
     }
   </script>
-
-
   <!-- все отели добавлены-->
-  <!-- файлы подтверждающие оплату туриста-->
-  <!--
-  <% t.fields_for :attachment_attributes, :multipart => true do %>
-    <p><%= file_field_tag 'platezhka' %></p>
-    <p><%= file_field_tag 'podtverzhd' %></p>
-  <% end %>
-  -->
-  <!-- файлы туриста закончены-->
-  <!-- файлы туроператору-->
-  <!--
-  <table>
-    <tr>
-      <td>Платежка</td>
-      <td> <%= file_field_tag 'platezh_operatory' %> </td>
-    </tr>
-    <tr>
-      <td>Подтверждение</td>
-      <td> <%= file_field_tag 'podtv_operatory' %></td>
-    </tr>
-  </table>
-  -->
-   
-  <!-- файлы туроператора закончены -->
   <p>Цена<input id="cena" name="travel[cena]" size="30" type="text" value="<%= @travel.cena %>"/></p>
   <div id="platezhi">
     
@@ -117,6 +92,14 @@
           </tr>
           <tr>
             <td>Оплата оператору</td><td><%= t.text_field :tyroperator_pay, :value => @travel.tyroperator_pay  %></td>
+          </tr>
+          <tr>
+<td>Туроператор</td>
+            <td>
+            <select id="travel_tyroper_id" name="travel[tyroper_id]">
+              <%= options_for_select Tyroper.all.collect {|x| [x.name, x.id]}, @travel.tyroper.name %>
+              </td>
+          </tr> 
       </table>
 
 
@@ -136,6 +119,7 @@
 <%= submit_tag "Сохранить" %>
 <% end %>
 
+<fieldset>   <legend>Документы туриста </legend>
 <% if @travel.podtv %>
   <%= render :partial => 'travel/link_podtv' %>
   <% if @travel.platezhka %>
@@ -150,4 +134,22 @@
    <% end %>
 <% else %>
    <%= render :partial => 'travel/upload_portv' %>
+ <% end %>
+</fieldset>
+<fieldset>   <legend>Документы туроператора</legend>  
+  <% if @travel.podtv_tyr %>
+    <%= render :partial => 'travel/link_tyr_podtv' %>
+    <% if @travel.platezhka_tyr %>
+      <%= render :partial => 'travel/link_tyr_platezhka' %>
+      <% if @travel.s4et_tyr %>
+      <%= render :partial => 'travel/link_tyr_s4et' %>
+    <% else %>
+    <%= render :partial => 'travel/upload_tyr_s4et' %>
+  <%end%>
+<% else %>  
+<%= render :partial => 'travel/upload_tyr_platezhka' %>
 <% end %>
+<% else %>
+<%= render :partial => 'travel/upload_tyr_portv' %>
+<% end %>
+</fieldset>

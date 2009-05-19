@@ -22,6 +22,8 @@ Rails::Initializer.run do |config|
 
   config.gem 'mislav-will_paginate', :lib => 'will_paginate', :source => 'http://gems.github.com'
   config.gem 'calendar_date_select'
+  config.gem 'prawn'
+  #config.gem 'rodf', :lib => 'odf/spreadsheet', :source => '/home/dima/rodf/rodf/rodf/rodf-0.1.1.gem'
   #config.gem 'pdf-writer', :source => 'http://gems.github.com'
   # Only load the plugins named here, in the order given (default is alphabetical).
   # :all can be used as a placeholder for all plugins not explicitly named

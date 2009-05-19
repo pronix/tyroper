@@ -1,6 +1,8 @@
+require 'rubygems'
 require 'prawn'
+require 'odf/spreadsheet'
 class TravelController < ApplicationController
-  layout nil , :only => [:get_zayavka, :get_dogovor]
+  before_filter :admin_required, :only => [:save_podtv, :save_plat, :save_s4et, :summ, :get_ot4, :remove_platezhka, :remove_podtv, :remove_s4et]
   auto_complete_for :tourist, :surname_kir, :limit => 15, :order => 'surname_kir  DESC'
 
   def index
@@ -60,7 +62,8 @@ class TravelController < ApplicationController
           :doplata => params['travel']['doplata'],
           :doplata_type => params['travel']['doplata_type'],
           :cena => params['travel']['cena'],
-          :tyroperator_pay => params['travel']['tyroperator_pay']
+          :tyroperator_pay => params['travel']['tyroperator_pay'],
+          :tyroper_id => params['travel']['tyroper_id']
         }.each do |key,val|
           @travel[key] = val
         end 
@@ -142,6 +145,50 @@ class TravelController < ApplicationController
        redirect_to :back
    end
 
+   ###############
+   def save_podtv_tyr
+     @podtv_tyr = Attachment.new
+     @podtv_tyr.uploaded_file = params[:file][:uploaded_data]
+     @podtv_tyr.travel_id = params[:id]
+     if @podtv_tyr.save
+       @travel_tyr = Travel.update(params[:id],{ :podtv_tyr => @podtv_tyr.id })
+       flash[:notice] = "Подтверждение оплаты сохранено"
+     else
+       flash[:error] = "Ошибка! подтверждение не сохранено!"
+     end
+     redirect_to :back
+   end
+
+   def save_s4et_tyr
+     @podtv_tyr = Attachment.new
+     @podtv_tyr.uploaded_file = params[:file][:uploaded_data]
+     @podtv_tyr.travel_id = params[:id]
+     if @podtv_tyr.save
+       @travel_tyr = Travel.update(params[:id],{ :s4et_tyr => @podtv_tyr.id })
+       flash[:notice] = "Подтверждение оплаты сохранено"
+#       render :partial => 'travel/link_s4et'
+     else
+       flash[:error] = "Ошибка! подтверждение не сохранено!"
+     end
+     redirect_to :back
+   end
+
+   def save_plat_tyr
+       @platezhka_tyr = Attachment.new
+       @platezhka_tyr.uploaded_file = params[:file][:uploaded_data]
+       @platezhka_tyr.travel_id = params[:id]
+       if @platezhka_tyr.save!
+         Travel.update(params[:id],{ :platezhka_tyr => @platezhka_tyr.id })
+        flash[:notice] = "Платежка сохранена" 
+#         render :file => 'travel/_link_platezhka.html.erb'
+       else
+         render :text => "Ошибка! платежка не сохранена!"
+       end        
+       redirect_to :back
+   end
+
+   ###############
+
    def remove_podtv
      @travel = Travel.find(params[:id])
      Attachment.delete(@travel.podtv)
@@ -165,6 +212,31 @@ class TravelController < ApplicationController
      @travel.save!
      redirect_to :back
    end
+
+   def remove_podtv_tyr
+     @travel = Travel.find(params[:id])
+     Attachment.delete(@travel.podtv_tyr)
+     @travel.podtv_tyr = nil
+     @travel.save!
+     redirect_to :back
+   end
+
+   def remove_s4et_tyr
+     @travel = Travel.find(params[:id])
+     Attachment.delete(@travel.s4et_tyr)
+     @travel.s4et_tyr = nil
+     @travel.save!
+     redirect_to :back
+   end
+
+   def remove_platezhka_tyr
+     @travel = Travel.find(params[:id])
+     Attachment.delete(@travel.platezhka_tyr)
+     @travel.platezhka_tyr = nil
+     @travel.save!
+     redirect_to :back
+   end
+
 
 
    def get_file
@@ -226,9 +298,214 @@ class TravelController < ApplicationController
 
    end
 
-   def get_zayavka
+   def view
      @travel = Travel.find(params[:id])
+     @users = []
+     @users << @travel.tourist
+     if @travel.tourists_array
+       @users << Tourist.find(@travel.tourists_array) 
+     end
+     @start_date = @travel.travelpoint.minimum('date_start')
+     @end_date = @travel.travelpoint.maximum('date_end')
     render :partial => 'travel/template_zayavka', :layout => nil 
 
    end
+
+   def get_zayavka_pdf
+     @travel = Travel.find(params[:id])
+     @users = []
+     @users << @travel.tourist
+     if @travel.tourists_array
+       @users << Tourist.find(@travel.tourists_array)
+     end
+     @start_date = @travel.travelpoint.minimum('date_start')
+     @end_date = @travel.travelpoint.maximum('date_end')
+     pdf = Prawn::Document.new( :size => "A4", :page_layout => :portrait, :right_margin => 0.2 )
+     pdf.font("#{Prawn::BASEDIR}/data/fonts/DejaVuSans.ttf")
+
+   end
+
+   def get_zayavka_rtf # генерить будем сразу и договор и заявку в odf
+     @travel = Travel.find(params[:id])
+     @c = Customer.first
+     @users = []
+     @users << @travel.tourist
+     if @travel.tourists_array
+       @users << Tourist.find(@travel.tourists_array)
+     end
+     @start_date = @travel.travelpoint.minimum('date_start')
+     @end_date = @travel.travelpoint.maximum('date_end')
+     ODF::SpreadSheet.file("public/files/zayavka#{@travel.id}.ods") do |spreadsheet|
+       spreadsheet.style 'red-cell', :family => :cell do |style|
+         style.property :text, 'font-weight' => 'bold', 'color' => '#ff0000'
+       end
+
+       spreadsheet.table 'Заявка' do |table|
+         table.row do |row|  
+           row.cell ''
+           row.cell ''
+           row.cell "Приложение №1 к договору #{@travel.id} от \"#{@travel.created_at.mday}\" #{month_ru(@travel.created_at.mon)} #{@travel.created_at.year}г."
+         end
+         table.row.cell 'г.Калининград'
+         table.row
+         table.row do |row|
+           row.cell 'Сторона, именуемая в договоре "Турагент": ' + @c.name + "\n" + @c.yur_adress + "\n" + @c.fiz_adress + "\n" + @c.phone + ' ОГРН ' + @c.ogrn + "\n ИНН/КПП "+ @c.inn + '/' + @c.kpp + "\n" + @c.r_s4 + "\n"+ @c.bank + "\n" + @c.bik + "\n" + @c.director
+         end
+         table.row do |row|
+           row.cell 'Сторона, именуемая в договоре "Турист": ' + @travel.tourist.surname_kir + ' ' + @travel.tourist.name_kir + ' ' + @travel.tourist.ot4_kir + "\n" #+ @travel.tourist.pasport_ros  
+         end
+         table.row
+         table.row do |row|
+           row.cell ''
+           row.cell ''
+           row.cell 'ЗАЯВКА НА БРОНИРОВАНИЕ ТУРПРОДУКТА'
+         end
+         table.row.cell '1. ТУРИСТЫ:'
+         table.row do |row|
+           row.cell 'ФИО + (транскрипция в загранпаспорте гражданина' + "\n" + 'РФ для выезда из РФ и въезда в РФ)'
+           row.cell 'Дата рождения'
+           row.cell 'Паспорт'
+           row.cell ''
+           row.cell 'Продолжительность путешествия*'
+           row.cell ''
+         end
+         table.row do |row|
+           row.cell ''
+           row.cell ''
+           row.cell 'серия, N'
+           row.cell 'действует до'
+           row.cell 'начало'
+           row.cell 'окончание'
+         end
+         @users.each do |t|
+           table.row do |row|
+             row.cell t.surname_kir + ' ' + t.name_kir + ' ' + t.ot4_kir + " \n " + t.surname_lat + ' ' + t.name_lat
+             row.cell t.borndate
+             row.cell t.seriya_zag_pasp.to_s + ' ' + t.nomer_zag_pasp.to_s
+             row.cell t.actual_date_zag
+             row.cell @start_date
+             row.cell @end_date
+           end
+         end
+
+         table.row.cell '2. Размещение по маршруту:'
+
+         table.row do |row|
+           row.cell 'Страна'
+           row.cell 'Город'
+           row.cell 'Отель/категория (по каталогу ТО)'
+           row.cell 'Период пребывания (с-по)'
+           row.cell 'Тип номера'
+           row.cell 'Питание'
+         end
+         @travel.travelpoint.each do |x|
+           table.row do |row|
+             row.cell x.country.name 
+             row.cell x.city.name
+             row.cell x.hotel.name
+             row.cell x.date_start.to_s + " - "+ x.date_end.to_s
+             row.cell x.roomtype.name
+             row.cell x.foodtype.name
+           end
+         end
+         table.row
+         table.row.cell '3. Услуги: 3.1. Турпродукт: '
+         table.row do |row| 
+           ['Наим.','Описание',"Количество\n туристов"].each do |x|
+             row.cell x
+           end
+         end
+         %w(Перевозка Трансфер Перевозка Страховка Трансфер).each do |x|
+           table.row.cell x
+         end
+         table.row
+         table.row.cell '3.2. Доп. услуги:'
+         table.row do |row|
+         %w(Описание Количество Цена).each do |x|
+           row.cell x
+         end
+         end
+         table.row
+         table.row.cell '3.3. Примечания: '
+         table.row
+         table.row.cell '4. Общая стоимость турпродукта (в рублях): '
+         ['Общая цена турпродукта составляет:','Стоимость доп.услуг составляет:','Скидка (Внимание! Скидки на дополнительные оплаты не распространяются): ','Предоплата (не менее 50%): ','Общая стоимость турпродукта составляет:','Полная оплата турпродукта производится в срок до:'].each do |x|
+           table.row.cell x
+         end
+         table.row
+         table.row.cell '6. Дополнительно: '
+         ['Встречи:','Проводы:','Сопровождение:','Минимальное количество человек в группе, необходимое для совершения путешествия (по условиям групповых и экскурсионных программ туроператора)'].each do |x|
+           table.row.cell x
+         end
+         table.row
+         table.row.cell '7. Турист заявляет о том, что: '
+         ['7.1. С правилами страхования от невыезда ознакомлен(а):','а) Согласен (согласна) оформить страховку от невыезда:','б) Отказываюсь оформить страховку от невыезда:','7.2. С информацией о стране пребывания, условиях и особенностях осуществления путешествия, правилами безопасности и поведения в стране пребывания ознакомлен(а)','7.3. Информацию о финансовом обеспечении туроператора, основаниях и порядке выплаты страхового возмещения или уплаты денежной суммы по банковской гарантии получил(а)'].each do |x|
+           table.row do |row|
+             row.cell x
+             row.cell 'Подпись:'
+           end
+         end
+         table.row
+         table.row do |row|
+           row.cell 'Турагент: '
+           row.cell ''
+           row.cell 'Турист:'
+         end
+         table.row do |row|
+           row.cell '____________/' + @c.director + "/"
+           row.cell ''
+           row.cell '____________/' + "#{@travel.tourist.surname_kir}" +"/"
+         end
+         table.row.cell 'М.П.'
+       end
+     end
+     send_file "public/files/zayavka#{@travel.id}.ods"
+#       File.delete "public/files/zayavka#{@travel.id}.ods"
+   end
+
+   def get_dogovor_ods
+     @travel = Travel.find(params[:id])
+     @c = Customer.first
+
+     ODF::SpreadSheet.file("public/files/dogovor#{@travel.id}.ods") do |spreadsheet|
+       spreadsheet.style 'red-cell', :family => :cell do |style|
+         style.property :text, 'font-weight' => 'bold', 'color' => '#ff0000'
+       end
+=begin
+       spreadsheet.style 'cust2', :family => :table do |style|
+         style.property :table, 'number-columns-spanned' => "2"
+       end
+=end       
+       spreadsheet.table 'Договор' do |table|
+         table.row do |row|
+#           row.cell_xml '<table:table-cell office:value-type="string" table:number-columns-spanned="2" table:number-rows-spanned="1"><text:p>тест</text:p></table:table-cell>'
+#           row.cell ''
+#           row.cell ''
+           row.cell "ДОГОВОР №#{@travel.id}" #, :style => 'cust2'
+         end
+         table.row
+         table.row do |row|
+           row.cell 'г. Калининград'
+           row.cell ''
+           row.cell ''
+           row.cell 'от \"'+"#{@travel.created_at.mday}"+'\”'+"#{month_ru(@travel.created_at.mon)} #{@travel.created_at.year}г."
+         end
+         table.row
+         table.row do |row|
+           row.cell "Сторона, именуемая в Договоре «Турагент»: #{@c.director}"
+         end
+         table.row.cell "Сторона, именуемая в Договоре «Турист»: #{@travel.tourist.surname_kir + " " + @travel.tourist.name_kir + " " + @travel.tourist.ot4_kir},паспорт гражданина РФ #{@travel.tourist.pasport_ros}, адрес местожительства: _______________________________________________ тел. #{@travel.tourist.phone}"
+         #table.row.cell render :partial => 'travel/dogovor'
+         @@f = File.open('app/views/travel/_dogovor.html.erb')
+         @@f.each_line do |str|
+           table.row.cell str
+         end
+         @@f.close
+         table.row.cell "____________________ /#{@travel.tourist.surname_kir}/              ____________________/#{@c.director}/"
+         table.row.cell '                  М.П.'
+       end
+     end
+     send_file "public/files/dogovor#{@travel.id}.ods"
+   end
+
 end

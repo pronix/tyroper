@@ -12,6 +12,7 @@ class CreateTourists < ActiveRecord::Migration
       t.text :pasport_ros
       t.integer :seriya_zag_pasp
       t.integer :nomer_zag_pasp
+      t.text    :actual_date_zag
       t.text :phone  
       t.integer :user_id, :null => false
       t.timestamps

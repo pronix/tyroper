@@ -26,13 +26,16 @@
           <div id='panel'>
             <%= link_to "Сделка",:controller => 'travel', :action => 'index' %> 
             <%= link_to "Туристы", :controller => 'tourist', :action => 'index' %>
-            <%= link_to "Отчеты", :controller => 'travel', :action => 'summ' %>
+            <% if User.find(session[:user]).admin? %>
+              <%= link_to "Отчеты", :controller => 'travel', :action => 'summ' %>
+              <%= link_to "Сотрудники",:controller => 'account', :action => 'list' %>
+              <%= link_to "Данные фирмы", :controller => 'customers', :action => 'index'%>
+            <% end %>
             <%= link_to "Страны", :controller => 'country', :action => 'index' %>
             <%= link_to "Города", :controller => 'city', :action => 'index' %>
             <%= link_to "Гостиницы",:controller => 'hotel', :action => 'index' %>
             <%= link_to "Тип питани", :controller => 'foodtype', :action => 'index' %>
             <%= link_to "Тип комнаты", :controller => 'roomtype', :action => 'index' %>
-            <%= link_to "Сотрудники",:controller => 'account', :action => 'list' %>
             <%= link_to "Туроператоры", :controller => 'tyropers', :action => 'index' %>
           </div>
           <% if flash[:notice] %>
@@ -48,6 +51,12 @@
           <ul>
             <li id="lc"><%= link_to "Создать туриста", :controller => "tourist", :action => 'new' %></li>
             <li id="lc"><%= link_to "Создать сделку", :controller => "travel", :action => 'new' %></li>
+            <% if current_page?(:controller => 'travel', :action => 'view') %>
+              <li id="lc"><%= link_to "Редактировать", :controller => "travel", :action => 'edit', :id => params[:id] %></li>
+              <!--<li id="lc"><%= link_to "Создать PDF", :controller => "travel", :action => 'get_zayavka_pdf', :id => params[:id] %></li>-->
+              <li id="lc"><%= link_to "Заявка", :controller => "travel", :action => 'get_zayavka_rtf', :id => params[:id] %></li>
+              <li id="lc"><%= link_to "Договор", :controller => "travel", :action => 'get_dogovor_ods', :id => params[:id] %></li>
+            <% end %>
           </ul>
         </div>
 

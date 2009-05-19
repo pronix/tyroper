@@ -52,6 +52,12 @@ module AuthenticatedSystem
       self.current_user ||= User.authenticate(username, passwd) || :false if username && passwd
       logged_in? && authorized? ? true : access_denied
     end
+
+    def admin_required
+      self.current_user 
+      @user = User.find(self.current_user)
+      @user.admin? ? true : access_denied
+    end
     
     # Redirect as appropriate when an access request fails.
     #

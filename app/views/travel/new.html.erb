@@ -86,6 +86,10 @@
       <tr/>
         <tr>
           <td>Оплата туроператору</td><td><%= t.text_field :tyroperator_pay%></td>
+        </tr>
+        <tr>
+          <td>Туроператор</td>
+          <td><%= select 'travel','tyroper_id', Tyroper.find(:all).collect {|x|[x.name, x.id]} %></td>
           </tr>
     </table>
     <% javascript_tag :defer => 'defer' do -%>
