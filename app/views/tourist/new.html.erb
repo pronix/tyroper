@@ -1,4 +1,4 @@
-<% form_for :tourist, :url => { :controller => 'tourist', :action => 'save'} do |t| %>
+<% form_for :tourist,@tourist, :url => { :controller => 'tourist', :action => 'save', :id => params[:id]} do |t| %>
   <table>
     <tr>
       <td><%= t.label "Фамилия кириллицей" %></td>
@@ -6,17 +6,17 @@
       <td><%= t.label "Отчество кириллицей" %></td>
     </tr>
     <tr>
-      <td><%= t.text_field :surname_kir,  :value => 'Фамилия кириллица',  :onfocus => "this.value=''" %></td>
-      <td><%= t.text_field :name_kir,     :value => 'Имя кириллица',      :onfocus => "this.value=''" %></td>
-      <td><%= t.text_field :ot4_kir ,     :value => 'Отчество кириллица', :onfocus => "this.value=''" %></td>
+      <td><%= t.text_field :surname_kir %></td>
+      <td><%= t.text_field :name_kir %></td>
+      <td><%= t.text_field :ot4_kir %></td>
     </tr>
     <tr>
       <td><%= t.label "Имя латиница" %></td>
       <td><%= t.label "Фамилия латиница " %></td>
     </tr> 
     <tr>
-      <td><%= t.text_field :name_lat,     :value => 'Имя латиница',       :onfocus => "this.value=''" %></td>
-      <td><%= t.text_field :surname_lat,  :value => 'Фамилия латиница',       :onfocus => "this.value=''" %></td>
+      <td><%= t.text_field :name_lat %></td>
+      <td><%= t.text_field :surname_lat %></td>
     </tr>
     <tr>
       <td><%= t.label "Серия загранпаспорт" %></td>
@@ -24,9 +24,9 @@
       <td><%= t.label "Телефон" %></td>
     </tr> 
     <tr>
-      <td><%= t.text_field :seriya_zag_pasp ,  :value => 'Серия загран паспорта',       :onfocus => "this.value=''"%></td>
-      <td><%= t.text_field :nomer_zag_pasp ,  :value => 'Номер загран паспорта',       :onfocus => "this.value=''"%></td>
-      <td><%= t.text_field :phone ,  :value => 'телефон',       :onfocus => "this.value=''"%></td>
+      <td><%= t.text_field :seriya_zag_pasp %></td>
+      <td><%= t.text_field :nomer_zag_pasp %></td>
+      <td><%= t.text_field :phone %></td>
     </tr> 
     <tr>
       <td><%= t.label "Пол" %></td>
@@ -34,13 +34,13 @@
       <td><%= t.label "Реклама" %></td>
     </tr> 
     <tr>
-      <td><%= select('tourist','sex',['Женщина','Мужчина','Ребенок']) %></td>
-      <td><%= calendar_date_select_tag "tourist[borndate]","Дата рождения" %></td>
-      <td><%= t.text_field :reklama ,  :value => 'Реклама',       :onfocus => "this.value=''"%></td>
+      <td><%= select('tourist','sex',['Женщина','Мужчина','Ребенок'],{}, { :selected => @tourist.sex } ) %></td> <!-- FIXME при редактировании правильный пол выводить-->
+      <td><%= calendar_date_select_tag "tourist[borndate]" , @tourist.borndate ? @tourist.borndate : '' %></td>
+      <td><%= t.text_field :reklama %></td>
     </tr>
   </table>
   <br />
-  <%= t.text_area :pasport_ros , :cols => 50, :rows => 10,  :value => 'Паспорт Российский',       :onfocus => "this.value=''"%>
+  <%= t.text_area :pasport_ros , :cols => 50, :rows => 10 %>
   <br />
   <br />
   <br />
