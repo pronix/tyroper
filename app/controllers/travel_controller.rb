@@ -1,5 +1,5 @@
 require 'rubygems'
-require 'prawn'
+#require 'prawn'
 require 'odf/spreadsheet'
 class TravelController < ApplicationController
   before_filter :admin_required, :only => [:save_podtv, :save_plat, :save_s4et, :summ, :get_ot4, :remove_platezhka, :remove_podtv, :remove_s4et]
@@ -300,6 +300,7 @@ class TravelController < ApplicationController
 
    def view
      @travel = Travel.find(params[:id])
+     @month = month_ru(@travel.created_at.mon)
      @users = []
      @users << @travel.tourist
      if @travel.tourists_array
@@ -339,121 +340,148 @@ class TravelController < ApplicationController
        spreadsheet.style 'red-cell', :family => :cell do |style|
          style.property :text, 'font-weight' => 'bold', 'color' => '#ff0000'
        end
+       spreadsheet.style 'cust2', :family => :cell do |style|
+         style.property :cell, 'border' => '0.0038in solid #000000'
+       end
+         
 
-       spreadsheet.table 'Заявка' do |table|
+       spreadsheet.table '' do |table|
          table.row do |row|  
            row.cell ''
            row.cell ''
-           row.cell "Приложение №1 к договору #{@travel.id} от \"#{@travel.created_at.mday}\" #{month_ru(@travel.created_at.mon)} #{@travel.created_at.year}г."
+           row.cell "Приложение №1 к договору #{@travel.id} от \"#{@travel.created_at.mday}\" #{month_ru(@travel.created_at.mon)} #{@travel.created_at.year}г.", :number_columns_spanned => 4
          end
-         table.row.cell 'г.Калининград'
+         table.row.cell 'г.Калининград' ,:number_columns_spanned => 2
          table.row
          table.row do |row|
-           row.cell 'Сторона, именуемая в договоре "Турагент": ' + @c.name + "\n" + @c.yur_adress + "\n" + @c.fiz_adress + "\n" + @c.phone + ' ОГРН ' + @c.ogrn + "\n ИНН/КПП "+ @c.inn + '/' + @c.kpp + "\n" + @c.r_s4 + "\n"+ @c.bank + "\n" + @c.bik + "\n" + @c.director
+           row.cell 'Сторона, именуемая в договоре "Турагент": ' + @c.name + "\n" + @c.yur_adress + "\n" + @c.fiz_adress + "\n" + @c.phone + ' ОГРН ' + @c.ogrn + "\n ИНН/КПП "+ @c.inn + '/' + @c.kpp + "\n" + @c.r_s4 + "\n"+ @c.bank + "\n" + @c.bik + "\n" + @c.director,  :number_columns_spanned => 7
          end
          table.row do |row|
-           row.cell 'Сторона, именуемая в договоре "Турист": ' + @travel.tourist.surname_kir + ' ' + @travel.tourist.name_kir + ' ' + @travel.tourist.ot4_kir + "\n" #+ @travel.tourist.pasport_ros  
+           row.cell 'Сторона, именуемая в договоре "Турист": ' + @travel.tourist.surname_kir + ' ' + @travel.tourist.name_kir + ' ' + @travel.tourist.ot4_kir + "\n", :number_columns_spanned => 7
          end
          table.row
          table.row do |row|
            row.cell ''
            row.cell ''
-           row.cell 'ЗАЯВКА НА БРОНИРОВАНИЕ ТУРПРОДУКТА'
+           row.cell 'ЗАЯВКА НА БРОНИРОВАНИЕ ТУРПРОДУКТА', :number_columns_spanned => 4
          end
          table.row.cell '1. ТУРИСТЫ:'
          table.row do |row|
-           row.cell 'ФИО + (транскрипция в загранпаспорте гражданина' + "\n" + 'РФ для выезда из РФ и въезда в РФ)'
-           row.cell 'Дата рождения'
-           row.cell 'Паспорт'
-           row.cell ''
-           row.cell 'Продолжительность путешествия*'
-           row.cell ''
+           row.cell "ФИО + (транскрипция в загран\nпаспорте гражданина РФ для \nвыезда из РФ и въезда в РФ)", :number_columns_spanned => 2, :style => 'cust2', :number_rows_spanned => 2
+           row.cell
+           row.cell 'Дата рождения', :style => 'cust2', :number_rows_spanned => 2
+           row.cell 'Паспорт', :number_columns_spanned => 2, :style => 'cust2'
+           row.cell 
+           row.cell "Продолжительность \nпутешествия*", :number_columns_spanned => 2, :style => 'cust2'
+           row.cell
          end
          table.row do |row|
            row.cell ''
            row.cell ''
-           row.cell 'серия, N'
-           row.cell 'действует до'
-           row.cell 'начало'
-           row.cell 'окончание'
+           row.cell ''
+           row.cell 'серия, N', :style => 'cust2'
+           row.cell 'действует до', :style => 'cust2'
+           row.cell 'начало', :style => 'cust2'
+           row.cell 'окончание', :style => 'cust2'
          end
          @users.each do |t|
            table.row do |row|
-             row.cell t.surname_kir + ' ' + t.name_kir + ' ' + t.ot4_kir + " \n " + t.surname_lat + ' ' + t.name_lat
-             row.cell t.borndate
-             row.cell t.seriya_zag_pasp.to_s + ' ' + t.nomer_zag_pasp.to_s
-             row.cell t.actual_date_zag
-             row.cell @start_date
-             row.cell @end_date
+             row.cell t.surname_kir + ' ' + t.name_kir + ' ' + t.ot4_kir + " \n " + t.surname_lat + ' ' + t.name_lat, :number_columns_spanned => 2, :style => 'cust2'
+             row.cell 
+             row.cell t.borndate, :style => 'cust2'
+             row.cell t.seriya_zag_pasp.to_s + ' ' + t.nomer_zag_pasp.to_s, :style => 'cust2'
+             row.cell t.actual_date_zag, :style => 'cust2'
+             row.cell @start_date, :style => 'cust2'
+             row.cell @end_date, :style => 'cust2'
            end
          end
 
          table.row.cell '2. Размещение по маршруту:'
 
          table.row do |row|
-           row.cell 'Страна'
-           row.cell 'Город'
-           row.cell 'Отель/категория (по каталогу ТО)'
-           row.cell 'Период пребывания (с-по)'
-           row.cell 'Тип номера'
-           row.cell 'Питание'
+           row.cell 'Страна', :style => 'cust2'
+           row.cell 'Город', :style => 'cust2'
+           row.cell "Отель/категория\n(по каталогу ТО)", :style => 'cust2'
+           row.cell "Период пребывания (с-по)", :style => 'cust2', :number_columns_spanned => 2
+           row.cell
+           row.cell 'Тип номера', :style => 'cust2'
+           row.cell 'Питание', :style => 'cust2'
          end
          @travel.travelpoint.each do |x|
            table.row do |row|
-             row.cell x.country.name 
-             row.cell x.city.name
-             row.cell x.hotel.name
-             row.cell x.date_start.to_s + " - "+ x.date_end.to_s
-             row.cell x.roomtype.name
-             row.cell x.foodtype.name
+             row.cell x.country.name , :style => 'cust2'
+             row.cell x.city.name , :style => 'cust2'
+             row.cell x.hotel.name , :style => 'cust2'
+             row.cell x.date_start.to_s + " - "+ x.date_end.to_s , :style => 'cust2', :number_columns_spanned => 2
+             row.cell
+             row.cell x.roomtype.name , :style => 'cust2'
+             row.cell x.foodtype.name , :style => 'cust2'
            end
          end
          table.row
          table.row.cell '3. Услуги: 3.1. Турпродукт: '
          table.row do |row| 
-           ['Наим.','Описание',"Количество\n туристов"].each do |x|
-             row.cell x
-           end
+           row.cell 'Наим.', :style => 'cust2'
+           row.cell 'Описание', :style => 'cust2', :number_columns_spanned => 5
+           row.cell ; row.cell ; row.cell; row.cell ;
+           row.cell "Количество\n туристов", :style => 'cust2'
          end
          %w(Перевозка Трансфер Перевозка Страховка Трансфер).each do |x|
-           table.row.cell x
+           table.row do |row|
+             row.cell x , :style => 'cust2'
+             row.cell '' , :number_columns_spanned => 5, :style => 'cust2'
+             row.cell ; row.cell ; row.cell; row.cell ;
+             row.cell '', :style => 'cust2'
+           end
          end
          table.row
          table.row.cell '3.2. Доп. услуги:'
          table.row do |row|
-         %w(Описание Количество Цена).each do |x|
-           row.cell x
-         end
+           row.cell 'Описание', :style => 'cust2', :number_columns_spanned => 5
+           row.cell ; row.cell ; row.cell; row.cell ;
+           row.cell 'Количество', :style => 'cust2'
+           row.cell 'Цена', :style => 'cust2'
          end
          table.row
          table.row.cell '3.3. Примечания: '
+         table.row.cell  '', :style => 'cust2', :number_columns_spanned => 7, :number_rows_spanned => 2
          table.row
          table.row.cell '4. Общая стоимость турпродукта (в рублях): '
          ['Общая цена турпродукта составляет:','Стоимость доп.услуг составляет:','Скидка (Внимание! Скидки на дополнительные оплаты не распространяются): ','Предоплата (не менее 50%): ','Общая стоимость турпродукта составляет:','Полная оплата турпродукта производится в срок до:'].each do |x|
-           table.row.cell x
+           table.row do |row|
+             row.cell x , :number_columns_spanned => 6, :style => 'cust2'
+             row.cell ; row.cell ; row.cell; row.cell ; row.cell ;
+             row.cell '', :style => 'cust2'
+           end
          end
          table.row
          table.row.cell '6. Дополнительно: '
-         ['Встречи:','Проводы:','Сопровождение:','Минимальное количество человек в группе, необходимое для совершения путешествия (по условиям групповых и экскурсионных программ туроператора)'].each do |x|
-           table.row.cell x
+         ['Встречи:','Проводы:','Сопровождение:',"Минимальное количество человек в группе, необходимое для совершения\n путешествия (по условиям групповых и экскурсионных\n программ туроператора)"].each do |x|
+           table.row do |row|
+             row.cell x, :number_columns_spanned => 5, :style => 'cust2'
+             row.cell ; row.cell ; row.cell; row.cell ;
+             row.cell '', :number_columns_spanned => 2, :style => 'cust2'
+             row.cell
+           end
          end
          table.row
-         table.row.cell '7. Турист заявляет о том, что: '
-         ['7.1. С правилами страхования от невыезда ознакомлен(а):','а) Согласен (согласна) оформить страховку от невыезда:','б) Отказываюсь оформить страховку от невыезда:','7.2. С информацией о стране пребывания, условиях и особенностях осуществления путешествия, правилами безопасности и поведения в стране пребывания ознакомлен(а)','7.3. Информацию о финансовом обеспечении туроператора, основаниях и порядке выплаты страхового возмещения или уплаты денежной суммы по банковской гарантии получил(а)'].each do |x|
+         table.row.cell '8. Турист заявляет о том, что: '
+         ['8.1. С правилами страхования от невыезда ознакомлен(а):','а) Согласен (согласна) оформить страховку от невыезда:','б) Отказываюсь оформить страховку от невыезда:',"7.2. С информацией о стране пребывания, условиях и особенностях\n осуществления путешествия, правилами безопасности и\n поведения в стране пребывания ознакомлен(а)","7.3. Информацию о финансовом обеспечении туроператора\n, основаниях и порядке выплаты страхового возмещения или уплаты\n денежной суммы по банковской гарантии получил(а)"].each do |x|
            table.row do |row|
-             row.cell x
-             row.cell 'Подпись:'
+             row.cell x, :number_columns_spanned => 6, :style => 'cust2'
+             row.cell ; row.cell ; row.cell; row.cell ;row.cell ;
+             row.cell 'Подпись:', :style => 'cust2'
            end
          end
          table.row
          table.row do |row|
            row.cell 'Турагент: '
-           row.cell ''
+           row.cell ; row.cell ; row.cell ; row.cell;
            row.cell 'Турист:'
          end
          table.row do |row|
            row.cell '____________/' + @c.director + "/"
-           row.cell ''
+           row.cell ; row.cell ; row.cell;
            row.cell '____________/' + "#{@travel.tourist.surname_kir}" +"/"
          end
          table.row.cell 'М.П.'
@@ -468,40 +496,47 @@ class TravelController < ApplicationController
      @c = Customer.first
 
      ODF::SpreadSheet.file("public/files/dogovor#{@travel.id}.ods") do |spreadsheet|
-       spreadsheet.style 'red-cell', :family => :cell do |style|
-         style.property :text, 'font-weight' => 'bold', 'color' => '#ff0000'
-       end
-=begin
-       spreadsheet.style 'cust2', :family => :table do |style|
-         style.property :table, 'number-columns-spanned' => "2"
-       end
-=end       
+#       spreadsheet.style 'red-cell', :family => :cell do |style|
+#         style.property :cell ,  'table:number-columns-spanned' => 2, 'table:number-rows-spanned' => 1
+#       end
+#       spreadsheet.style 'cust2', :family => :cell do |style|
+#         style.property :cell, 'border' => '0.0138in solid #000000'
+#       end
        spreadsheet.table 'Договор' do |table|
          table.row do |row|
-#           row.cell_xml '<table:table-cell office:value-type="string" table:number-columns-spanned="2" table:number-rows-spanned="1"><text:p>тест</text:p></table:table-cell>'
-#           row.cell ''
-#           row.cell ''
-           row.cell "ДОГОВОР №#{@travel.id}" #, :style => 'cust2'
+           row.cell 
+           row.cell
+           row.cell
+           row.cell "ДОГОВОР №#{@travel.id}", :number_columns_spanned => 3 
          end
          table.row
          table.row do |row|
-           row.cell 'г. Калининград'
+           row.cell 'г. Калининград' , :number_columns_spanned => 2
            row.cell ''
            row.cell ''
-           row.cell 'от \"'+"#{@travel.created_at.mday}"+'\”'+"#{month_ru(@travel.created_at.mon)} #{@travel.created_at.year}г."
+           row.cell ''
+           row.cell ''
+           row.cell 'от "'+"#{@travel.created_at.mday}"+'”'+"#{month_ru(@travel.created_at.mon)} #{@travel.created_at.year}г."
          end
          table.row
          table.row do |row|
-           row.cell "Сторона, именуемая в Договоре «Турагент»: #{@c.director}"
+           row.cell "Сторона, именуемая в Договоре «Турагент»: #{@c.director}", :number_columns_spanned => 8
          end
-         table.row.cell "Сторона, именуемая в Договоре «Турист»: #{@travel.tourist.surname_kir + " " + @travel.tourist.name_kir + " " + @travel.tourist.ot4_kir},паспорт гражданина РФ #{@travel.tourist.pasport_ros}, адрес местожительства: _______________________________________________ тел. #{@travel.tourist.phone}"
-         #table.row.cell render :partial => 'travel/dogovor'
+         table.row.cell "Сторона, именуемая в Договоре «Турист»: #{@travel.tourist.surname_kir + " " + @travel.tourist.name_kir + " " + @travel.tourist.ot4_kir},паспорт \n гражданина РФ #{@travel.tourist.pasport_ros}, адрес местожительства: _______________________________________________ тел. #{@travel.tourist.phone}" , :number_columns_spanned => 8
          @@f = File.open('app/views/travel/_dogovor.html.erb')
          @@f.each_line do |str|
-           table.row.cell str
+           if str =~ /^zzzZZZ/
+             table.row do |row|
+             row.cell 
+             row.cell
+             row.cell str.sub(/^zzzZZZ/, ''), :number_columns_spanned => 5
+             end
+           else
+             table.row.cell str, :number_columns_spanned => 8
+           end
          end
          @@f.close
-         table.row.cell "____________________ /#{@travel.tourist.surname_kir}/              ____________________/#{@c.director}/"
+         table.row.cell "____________________ /#{@travel.tourist.surname_kir}/              ____________________/#{@c.director}/", :number_columns_spanned => 8
          table.row.cell '                  М.П.'
        end
      end

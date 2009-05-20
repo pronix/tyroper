@@ -328,3 +328,27 @@ div.auto_complete ul strong.highlight {
   padding:0;
 }
 
+.button {
+  background:transparent url(bg-button-r.gif) no-repeat scroll right 0;
+  cursor:pointer;
+  display:inline-block;
+  line-height:22px;
+  padding:0 11px 0 0;
+}
+
+.incut{background: #dff7ff;padding: 20px;}
+
+.incut:before{
+  content:url(i/border_tl.gif);
+  background: url(i/border_tr.gif) no-repeat 100% 0;
+  height: 7px;
+  display: block;
+  margin: -20px -20px 13px -20px;
+}
+.incut:after{
+  content:url(i/border_bl.gif);
+  background: url(i/border_br.gif) no-repeat 100% 0;
+  height: 7px;
+  display: block;
+  margin:13px -20px -20px -20px;
+}

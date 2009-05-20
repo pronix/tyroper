@@ -1,16 +1,49 @@
 <% form_for :tourist, :url => { :controller => 'tourist', :action => 'save'} do |t| %>
-  <%= t.text_field :surname_kir,  :value => 'Фамилия кириллица',  :onfocus => "this.value=''" %>
-  <%= t.text_field :name_kir,     :value => 'Имя кириллица',      :onfocus => "this.value=''" %>
-  <%= t.text_field :ot4_kir ,     :value => 'Отчество кириллица', :onfocus => "this.value=''" %>
-  <%= t.text_field :name_lat,     :value => 'Имя латиница',       :onfocus => "this.value=''" %>
-  <%= t.text_field :surname_lat,  :value => 'Имя латиница',       :onfocus => "this.value=''" %>
-  <%= select('tourist','sex',['Женщина','Мужчина','Ребенок']) %>
-  <%= calendar_date_select_tag "tourist[borndate]","date_end" %>
-  <%= t.text_field :reklama %>
-  <%= t.text_area :pasport_ros %>
-  <%= t.text_field :seriya_zag_pasp %>
-  <%= t.text_field :nomer_zag_pasp %>
-  <%= t.text_field :phone %>
-<%= submit_tag "Сохранить" %>
+  <table>
+    <tr>
+      <td><%= t.label "Фамилия кириллицей" %></td>
+      <td><%= t.label "Имя кириллицей" %></td>
+      <td><%= t.label "Отчество кириллицей" %></td>
+    </tr>
+    <tr>
+      <td><%= t.text_field :surname_kir,  :value => 'Фамилия кириллица',  :onfocus => "this.value=''" %></td>
+      <td><%= t.text_field :name_kir,     :value => 'Имя кириллица',      :onfocus => "this.value=''" %></td>
+      <td><%= t.text_field :ot4_kir ,     :value => 'Отчество кириллица', :onfocus => "this.value=''" %></td>
+    </tr>
+    <tr>
+      <td><%= t.label "Имя латиница" %></td>
+      <td><%= t.label "Фамилия латиница " %></td>
+    </tr> 
+    <tr>
+      <td><%= t.text_field :name_lat,     :value => 'Имя латиница',       :onfocus => "this.value=''" %></td>
+      <td><%= t.text_field :surname_lat,  :value => 'Фамилия латиница',       :onfocus => "this.value=''" %></td>
+    </tr>
+    <tr>
+      <td><%= t.label "Серия загранпаспорт" %></td>
+      <td><%= t.label "Номер загран паспорт" %></td>
+      <td><%= t.label "Телефон" %></td>
+    </tr> 
+    <tr>
+      <td><%= t.text_field :seriya_zag_pasp ,  :value => 'Серия загран паспорта',       :onfocus => "this.value=''"%></td>
+      <td><%= t.text_field :nomer_zag_pasp ,  :value => 'Номер загран паспорта',       :onfocus => "this.value=''"%></td>
+      <td><%= t.text_field :phone ,  :value => 'телефон',       :onfocus => "this.value=''"%></td>
+    </tr> 
+    <tr>
+      <td><%= t.label "Пол" %></td>
+      <td><%= t.label "Дата рождения" %></td>
+      <td><%= t.label "Реклама" %></td>
+    </tr> 
+    <tr>
+      <td><%= select('tourist','sex',['Женщина','Мужчина','Ребенок']) %></td>
+      <td><%= calendar_date_select_tag "tourist[borndate]","Дата рождения" %></td>
+      <td><%= t.text_field :reklama ,  :value => 'Реклама',       :onfocus => "this.value=''"%></td>
+    </tr>
+  </table>
+  <br />
+  <%= t.text_area :pasport_ros , :cols => 50, :rows => 10,  :value => 'Паспорт Российский',       :onfocus => "this.value=''"%>
+  <br />
+  <br />
+  <br />
+   <%= submit_tag "Сохранить" %>
 <% end %>
 

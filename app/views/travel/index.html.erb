@@ -16,7 +16,8 @@
 =end
 
   g.column :column_name => 'Фамилия', :attribute_name => 'surname_kir', :model_class => Tourist do |travel|
-    link_to travel.tourist.surname_kir + " " + travel.tourist.name_kir , :controller => 'tourist', :action => 'view', :id => travel.tourist.id
+    #    link_to travel.tourist.surname_kir + " " + travel.tourist.name_kir , :controller => 'tourist', :action => 'view', :id => travel.tourist.id
+    link_to travel.tourist.surname_kir + " " + travel.tourist.name_kir , :controller => 'travel', :action => 'view', :id => travel.id
   end
 
   g.column :column_name => 'Номер договора', :attribute_name => 'id' do |travel|
