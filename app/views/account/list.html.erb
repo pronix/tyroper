@@ -1,0 +1,24 @@
+<%= grid(@grid_user) do |t|
+
+  t.column :column_name => 'Логин' do |c|
+    c.login
+  end
+
+  t.column :column_name => 'Сделок' do |c|
+    c.travel.size
+  end
+
+  t.column :column_name => 'Админ' do |c|
+    "<div id=\"admin#{c.id}\">" + 
+      link_to_remote(c.admin? ? 'Yes' : 'No' , :update => "admin#{c.id}", :url => {:controller => 'account', :action => 'chadmin', :id => c.id}) +
+    "</div>"
+  end
+
+  t.column :column_name => 'Активен' do |c|
+    "<div id=\"active#{c.id}\">" +
+      link_to_remote(c.active? ? 'Yes' : 'No' , :update => "active#{c.id}", :url => {:controller => 'account', :action => 'chactive', :id => c.id}) +
+      "</div>"
+  end
+
+end -%>
+<%= link_to "Добавить сотрудника", :controller => 'account', :action => 'signup' %>

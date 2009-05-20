@@ -1,0 +1,6 @@
+<div id="s4et">
+  <%= link_to "Счет", :controller => 'travel', :action => 'get_file', :id => @travel.s4et_tyr %>
+  <% if User.find(session[:user]).admin? %>
+    <%= link_to "Удалить s4et", :controller => 'travel', :action => 'remove_s4et_tyr', :id => @travel.id %>
+  <% end %>
+</div>

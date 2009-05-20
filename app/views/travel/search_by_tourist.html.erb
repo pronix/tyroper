@@ -1,0 +1,6 @@
+<% form_for :tourist, :url => {:controller => 'travel', :action => 'find_by_tourist'} do |t| %>
+  <%= t.text_field :surname_kir, :id => 't1'%>
+  <%= auto_complete_field  't1', :update =>  'tt1', :url => { :action => 'select_tourist'} %>
+  <div id="tt1"></div>
+  <%= submit_tag "Найти" %>
+<% end %>

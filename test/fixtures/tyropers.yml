@@ -1,0 +1,25 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  name: Первый туроператор
+  shortname: ПТ
+  adress: Чукотка Анадырь площадь ленина 1
+  mailadress: 198206 Чукотка Анадырь площадь ленина 1
+  mbt: 123
+  finobes: 1
+  dogovor: MyText
+  orgfinobes: MyText
+  adressfinobes: MyText
+  mailadressfinobes: MyText
+
+two:
+  name: MyText
+  shortname: MyText
+  adress: MyText
+  mailadress: MyText
+  mbt: 1
+  finobes: 1
+  dogovor: MyText
+  orgfinobes: MyText
+  adressfinobes: MyText
+  mailadressfinobes: MyText

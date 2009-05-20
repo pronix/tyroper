@@ -1,0 +1,6 @@
+<%= grid(@country_grid) do |t| 
+  t.column :column_name => 'Название' do |c|
+    link_to c.name, :controller => 'country', :action => 'edit', :id => c.id
+  end
+end -%>
+<%= link_to 'Новая страна', :action => 'new' %>

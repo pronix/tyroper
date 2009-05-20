@@ -1,0 +1,155 @@
+<style type="text/css">
+ div.auto_complete {
+   width: 350px;
+   background: #fff;
+  }
+ div.auto_complete ul {
+     border:1px solid #888;
+     margin:0;
+     padding:0;
+     width:100%;
+     list-style-type:none;
+   }
+ div.auto_complete ul li {
+  margin:0;
+  padding:3px;
+  }
+ div.auto_complete ul li.selected {
+  background-color: #ffb;
+  }
+ div.auto_complete ul strong.highlight {
+  color: #800;
+  margin:0;
+  padding:0;
+ }
+</style>
+
+<% form_for @travel,:travel, :url => { :controller => 'travel', :action => 'save', :id => @travel.id }, :html => { :multipart => true }  do |t| %>
+  <!-- добавление туристов в список едущих-->
+  <div id='tourists_list'>
+    <p onclick="new insertElement()">Добавить туриста</p>
+    <span id="add_tourist_scr"></span>
+    <div id="input_1"><input id="t1" name="travel[surname_kir]" size="30" type="text" value="<%= @travel.tourist.surname_kir + " " + @travel.tourist.name_kir %>"/></div>
+    <div id="tt1" class="auto_complete"></div>
+      <%= auto_complete_field  't1', :update =>  'tt1', :url => { :action => 'select_tourist'} %>
+      <%= render :partial => 'tourist_cicle' %>
+      <script language="JavaScript">
+        var clicknom = 2;
+        function insertElement() {
+          clicknom++; divid = "tourist_" + clicknom; div = document.getElementById("tourists_list"); jsnewel = '//<![CDATA[' + "\n"  + 'var t' + clicknom + '_auto_completer = new Ajax.Autocompleter(\'t'  + clicknom + '\', \'tt'  + clicknom + '\', \'/travel/select_tourist\', {})' + "\n" + '//]]>'; newel = Builder.node('div',{id:"input_"+clicknom},[Builder.node('input',{id:"t"+clicknom,name:'travel[surname_kir'+clicknom+']',size:'30',type:'text'})]); newel2 = Builder.node('div',{id:'tt'+clicknom,class:'auto_complete'}); newel3 = Builder.node('script',{type:'text/javascript'},[jsnewel]); div.appendChild(newel); div.appendChild(newel2); div.appendChild(newel3);
+          }
+        </script>
+  </div>
+
+  <!-- конец добавления в список едущих-->
+  <!-- добавляем точки маршрута -->
+  <% @tp = 0 %>
+  
+  <% unless  @travel.travelpoint.empty? %>
+  <% @travel.travelpoint.each do |travelp| %>
+    <% @travelp = travelp %>
+    <%= render 'travelpoint/edit.html.erb' %>
+    <% @tp+=1 %>
+  <% end %>
+<% else %>
+ <div id="travp0"></div>
+<% end %>
+
+
+
+
+  <span id="hotel_controller" onclick="new Hotelnom()">Add Hotel</span>
+  <script language="JavaScript">
+    var hnom = <%= @tp == 0 ? 0 : @tp-1 %>;
+    function Hotelnom () {
+      new Ajax.Request('/travelpoint/new_point/' + hnom , {asynchronous:true, evalScripts:true, parameters:'authenticity_token=' + encodeURIComponent('ht8fyKBVFZcXYnLk2S/5n4gmPDHlihvPqdCPtMVQodY=')});
+      hnom++;
+      return false;
+    }
+  </script>
+  <!-- все отели добавлены-->
+  <p>Цена<input id="cena" name="travel[cena]" size="30" type="text" value="<%= @travel.cena %>"/></p>
+  <div id="platezhi">
+    
+    <table>
+      <tr>Платежи внесенные клиентом</tr>
+      <tr>
+        <td>Предоплата</td>
+        <td><input id="travel_predoplata" name="travel[predoplata]" onchange="new SumVal()" size="30" type="text" value="<%=@travel.predoplata %>"/></td>
+        <td><select id="travel_predoplata_type" name="travel[predoplata_type]""><option value="наличными" <%= if @travel.predoplata_type == 'наличными' then 'selected' end %>>наличными</option><option value="безналом" <%= if @travel.predoplata_type == 'безналом' then 'selected' end %>>безналом</option></select></td>
+      </tr>
+        <tr>
+          <td>Доплата</td>
+          <td><input id="travel_doplata" name="travel[doplata]" onchange="new SumVal()" size="30" type="text" value="<%= @travel.doplata %>"/></td>
+          <td><select id="travel_doplata_type" name="travel[doplata_type]"><option value="наличными" <%= if @travel.doplata_type == 'наличными' then 'selected' end %>>наличными</option>
+              <option value="безналом" <%= if @travel.doplata_type == 'безналом' then 'selected' end %>>безналом</option></select></td>
+          </tr>
+          <tr>
+
+            <td>Общая сумма</td><td><input type="text" readonly id="inputsum" size="30" value="<%= @travel.summa %>"></td>
+          </tr>
+          <tr>
+          </tr>
+          <tr>
+            <td>Оплата оператору</td><td><%= t.text_field :tyroperator_pay, :value => @travel.tyroperator_pay  %></td>
+          </tr>
+          <tr>
+<td>Туроператор</td>
+            <td>
+            <select id="travel_tyroper_id" name="travel[tyroper_id]">
+              <%= options_for_select Tyroper.all.collect {|x| [x.name, x.id]}, @travel.tyroper.name %>
+              </td>
+          </tr> 
+      </table>
+
+
+    <% javascript_tag :defer => 'defer' do -%>
+      function SumVal () {
+      itog = document.getElementById("inputsum");
+      pred = document.getElementById("travel_predoplata");
+      post = document.getElementById("travel_doplata");
+      sum = pred.value*1 + post.value*1 ;
+      itog.value = sum;
+      }
+    <% end -%> 
+
+  </div>
+
+  <%= t.text_area :description, :value => @travel.description %>
+<%= submit_tag "Сохранить" %>
+<% end %>
+
+<fieldset>   <legend>Документы туриста </legend>
+<% if @travel.podtv %>
+  <%= render :partial => 'travel/link_podtv' %>
+  <% if @travel.platezhka %>
+     <%= render :partial => 'travel/link_platezhka' %>
+         <% if @travel.s4et %>
+           <%= render :partial => 'travel/link_s4et' %>
+         <% else %>
+            <%= render :partial => 'travel/upload_s4et' %>
+         <%end%>
+   <% else %>  
+        <%= render :partial => 'travel/upload_platezhka' %>
+   <% end %>
+<% else %>
+   <%= render :partial => 'travel/upload_portv' %>
+ <% end %>
+</fieldset>
+<fieldset>   <legend>Документы туроператора</legend>  
+  <% if @travel.podtv_tyr %>
+    <%= render :partial => 'travel/link_tyr_podtv' %>
+    <% if @travel.platezhka_tyr %>
+      <%= render :partial => 'travel/link_tyr_platezhka' %>
+      <% if @travel.s4et_tyr %>
+      <%= render :partial => 'travel/link_tyr_s4et' %>
+    <% else %>
+    <%= render :partial => 'travel/upload_tyr_s4et' %>
+  <%end%>
+<% else %>  
+<%= render :partial => 'travel/upload_tyr_platezhka' %>
+<% end %>
+<% else %>
+<%= render :partial => 'travel/upload_tyr_portv' %>
+<% end %>
+</fieldset>

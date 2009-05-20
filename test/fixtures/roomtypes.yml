@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+# one:
+#   column: value
+#
+# two:
+#   column: value
+<% ['DBL','SNQL','TRPL','DBL+CHD','SNGL+CHD','Family Room','DBL SV','DBL GV'].each do |x| %>
+<%=x%>:
+  name: <%= x%>
+<% end %>

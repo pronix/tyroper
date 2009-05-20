@@ -1,0 +1,23 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+# one:
+#   column: value
+#
+# two:
+#   column: value
+<% 1.upto(50) do |nu| %>
+tourist_<%=nu%>:
+    name_kir: name_kir_<%= nu %>
+    ot4_kir:  ot4_kir_ <%= nu %>
+    surname_kir: surname_kir_<%= nu %> 
+    name_lat: name_lat_<%= nu %>
+    sex: true
+    surname_lat: surname_lat_<%= nu %>
+    borndate: 01.03.19<%=nu%>
+    reklama: gazeta
+    seriya_zag_pasp: <%= nu %>
+    nomer_zag_pasp: <%= nu %><%= nu%>
+    phone: 1234<%=nu%>
+    user_id: 1
+<%end%>
+

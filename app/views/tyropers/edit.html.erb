@@ -1,0 +1,61 @@
+<h1>Editing tyroper</h1>
+
+<% form_for(@tyroper) do |f| %>
+  <%= f.error_messages %>
+  <table>
+    <tr>
+  <td>
+    <%= f.label :name %><br />
+    <%= f.text_area :name ,:cols => 40, :rows => 5 %>
+  </td>
+  <td>
+    <%= f.label :shortname %><br />
+    <%= f.text_area :shortname ,:cols => 40, :rows => 5 %>
+  </td>
+  <td>
+    <%= f.label :adress %><br />
+    <%= f.text_area :adress ,:cols => 40, :rows => 5 %>
+  </td>
+  </tr>
+    <tr>
+  <td>
+    <%= f.label :mailadress %><br />
+    <%= f.text_area :mailadress ,:cols => 40, :rows => 5 %>
+  </td>
+  <td>
+    <%= f.label :mbt %><br />
+    <%= f.text_area :mbt ,:cols => 40, :rows => 5 %>
+  </td>
+  <td>
+    <%= f.label :finobes %><br />
+    <%= f.text_area :finobes ,:cols => 40, :rows => 5 %>
+  </td>
+</tr>
+<tr>
+  <td>
+    <%= f.label :dogovor %><br />
+    <%= f.text_area :dogovor ,:cols => 40, :rows => 5 %>
+  </td>
+  <td>
+    <%= f.label :orgfinobes %><br />
+    <%= f.text_area :orgfinobes ,:cols => 40, :rows => 5 %>
+  </td>
+  <td>
+    <%= f.label :adressfinobes %><br />
+    <%= f.text_area :adressfinobes ,:cols => 40, :rows => 5 %>
+  </td>
+</tr>
+<tr>
+  <td>
+    <%= f.label :mailadressfinobes %><br />
+    <%= f.text_area :mailadressfinobes ,:cols => 40, :rows => 5 %>
+  </td>
+  <td>
+    <%= f.submit 'Update' %>
+  </td>
+</tr>
+</table>
+<% end %>
+
+<%= link_to 'Show', @tyroper %> |
+<%= link_to 'Back', tyropers_path %>

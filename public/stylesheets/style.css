@@ -1,0 +1,354 @@
+*{
+	padding: 0px;
+	margin: 0px;
+}
+
+body{
+	color:#333333;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+}
+
+/*div{
+	border:1px dotted #FF0000;
+	}
+*/
+a, a:visited{
+	color:#555555;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:12px;
+	font-weight:bold;
+	text-decoration:none;
+}
+
+a:hover, a:active{
+	color:#000000;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:12px;
+	font-weight:bold;
+	text-decoration:none;
+}
+
+table,td {
+	font-size: 11px;
+	}
+
+p {
+	MARGIN-TOP: 0px;
+	MARGIN-BOTTOM: 0px;
+	}
+	
+form {
+	margin: 0px;
+	}
+ 
+h2, h1 {
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	font-weight: bold; 
+	margin-bottom: 0px;
+	margin-top: 0px;
+	
+	}
+
+h3, .monthHeaderH3, .schedulerTopDateCell {
+	
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	font-weight: bold; 
+	margin-bottom: 3px;
+	padding-top: 3px;	
+	font-size: 14px; 
+	
+	
+	}
+
+.h3Row, .monthHeader, .schedulerTopDateCell { 
+	padding: 6px 5px 4px 3px;
+	margin-bottom: 0;
+	margin-top: 10px;
+	vertical-align: middle;
+	background-repeat: repeat-x;
+	background-position: top;
+	background-color: #fff;
+	
+}
+
+h4, h4.dataLabel, h5, h5.listViewSubHeadS1 {
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	font-size: 12px; 
+	font-weight: bold; 
+	margin-bottom: 2px;
+	padding-left: 4px;		
+	
+	}
+h4.dataLabel {
+margin-top: 0;
+padding-left: 0;
+padding-top: 0;
+}
+
+LI {
+	LIST-STYLE-TYPE: square; 
+	margin-left: 6px; 
+	MARGIN-BOTTOM: 2px;
+	}
+	
+UL {
+	MARGIN-TOP: 2px;
+	}
+	
+hr {
+	height: 1px;
+}
+
+#header{
+	padding: 20px 0px 20px 20px;
+	background-color:#EEEEEE;
+	border-bottom:2px solid #0066FF;
+	text-align:left;
+	color:#0099FF;
+}
+
+#content{
+	float:right;
+	text-align:left;
+	width: 90%;
+	border: 1px solid #0066FF;
+	background-color:#EEEEEE;
+	padding: 10px;
+	margin-top: 20px;
+	
+	
+}
+
+#content_block{
+margin-left:80px;
+}
+
+#menul{
+	float: left;
+	text-align:left;
+	margin: 20px 0px 0px 0px;
+	padding-left: 10px;
+	width:150px;
+}
+
+#bl_line{
+	background-color:#6CC0FF;
+	width:100%;
+	height: 15px;
+}
+
+ul, li{
+	padding: 4px;
+	list-style-type:none;
+}
+
+li#lc{
+	border: 1px solid #EEEEEE;
+}
+
+li#lc:hover, li#lc:active{
+	background-color:#DFEEFF;
+	border: 1px solid #0099cc;
+}
+
+#logged_in{
+	color:#333333;
+	padding: 0px 30px 0px 0px;
+	text-align:right;
+	background-color:#EEEEEE;
+	float:right;
+	width: 200px;
+	vertical-align:middle;
+}
+
+.tb_1_grey{
+	width: 500px;
+	margin: 10px 0px 10px 0px;
+	border: 1px solid #999999;
+}
+
+.td_1_grey{
+	font-size:14px;
+	color:#3366FF;
+	font-weight:bold;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-left: 5px;
+	border-bottom: 1px solid #999999;
+}
+
+.td_2_grey{
+	padding-left: 5px;
+}
+
+#platezhka, #podtverzhd, #podtv_operatory, #platezh_operatory{
+	width: 400px;
+}
+
+#travel_description{
+width:700px;
+height:150px;
+}
+
+#wrap{
+	clear:both;
+	width:100%;
+}
+
+.notice{
+	color:#3333CC;
+	font-size:10px;
+	margin-right:37px;
+	text-align:right;
+}
+
+.menu_list{
+	border:1px solid #cccccc;
+	padding:3px 0px 3px 5px;
+	margin: 2px 0px 2px 0px;
+}
+
+.menu_list:hover{
+	border:1px solid #aaaaaa;
+	padding:3px 0px 3px 5px;
+	margin: 2px 0px 2px 0px;
+}
+
+.disabled_prev_page, .current{
+	color:#555555;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:12px;
+	font-weight:bold;
+	text-decoration:none;	
+}
+
+.current{
+	color:#111111;
+	text-decoration:underline;	
+}
+
+.pagination{
+	margin: 20px 0px 10px 0px;
+	text-align:right;
+}
+
+/* Form Styles */
+
+input{
+	margin: 5px;
+}
+
+.button {
+	width: 100px;
+	border: 1px solid #0099CC;
+	font-size: 12px;
+	font-weight: normal;
+	background-color:#E6F1FF;
+	background-repeat: repeat-x;
+	background-position: top;
+	padding: 0px 0px 1px 0px;
+	margin-top: 10px;
+	vertical-align: middle;
+	}
+	
+.buttonOn, .button:hover, .button:focus, .buttonOn:focus {
+	border: 1px solid #0099CC;
+	color: #fff;
+	background-color:#0099CC;
+	background-image: none;
+	cursor:pointer;
+	font-size: 12px;
+	font-weight: normal;
+	}
+.tabDetailView .button img{
+margin-right: 5px;
+margin-left: 5px;
+}
+#listViewPaginationButtons .button {
+width: 25px;
+}
+table.reportDataChildtablelistView td {
+border-color: #ccc;
+}
+input,select {
+	border: 1px solid #0099CC;
+	font-size: 12px;
+	}
+	
+input:focus,textarea:focus, select:focus { 
+	 }
+textarea {
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	border: 1px solid #0099CC;
+	font-size: 12px;
+	}
+.checkbox,.radio {
+	border:0px;
+	background-color: transparent;
+	margin: 0px;
+	vertical-align: bottom;
+	}
+
+span.welcome{
+	background-color:#EEEEEE;
+	float:right;
+	padding-top: 0px;
+	line-height: 20px;
+}
+
+.odd {
+  background-color:#66FF66;
+}
+.even {
+  background-color:#FFFFFF;
+}
+
+div.auto_complete {
+  width: 350px;
+  background: #fff;
+}
+div.auto_complete ul {
+  border:1px solid #888;
+  margin:0;
+  padding:0;
+  width:100%;
+  list-style-type:none;
+}
+div.auto_complete ul li {
+  margin:0;
+  padding:3px;
+}
+div.auto_complete ul li.selected {
+  background-color: #ffb;
+}
+div.auto_complete ul strong.highlight {                                                                                 
+  color: #800;
+  margin:0;
+  padding:0;
+}
+
+.button {
+  background:transparent url(bg-button-r.gif) no-repeat scroll right 0;
+  cursor:pointer;
+  display:inline-block;
+  line-height:22px;
+  padding:0 11px 0 0;
+}
+
+.incut{background: #dff7ff;padding: 20px;}
+
+.incut:before{
+  content:url(i/border_tl.gif);
+  background: url(i/border_tr.gif) no-repeat 100% 0;
+  height: 7px;
+  display: block;
+  margin: -20px -20px 13px -20px;
+}
+.incut:after{
+  content:url(i/border_bl.gif);
+  background: url(i/border_br.gif) no-repeat 100% 0;
+  height: 7px;
+  display: block;
+  margin:13px -20px -20px -20px;
+}

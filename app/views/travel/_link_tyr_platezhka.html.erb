@@ -1,0 +1,6 @@
+<div id="platezhka">
+  <%= link_to "Платежка", :controller => 'controller', :action => 'get_file', :id => @travel.platezhka_tyr %>
+  <% if User.find(session[:user]).admin? %>
+    <%= link_to "Удалить платежку", :controller => 'travel', :action => 'remove_platezhka_tyr', :id => @travel.id %>
+  <% end %>
+</div>

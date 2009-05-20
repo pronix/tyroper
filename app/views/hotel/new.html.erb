@@ -1,0 +1,8 @@
+<% form_for :hotel,@hotel, :url => { :controller => 'hotel', :action => 'save' } do |t| %>
+  <%= t.text_field :name, :value => 'Имя отеля' , :onfocus => "this.value=''" %>
+  <%= t.text_field :description, :value => 'Описание отеля', :onfocus => "this.value=''" %>
+  <%= text_field_with_auto_complete :city, :name, {}, { :method => :get } %>
+
+
+  <%= submit_tag "Сохранить" %>
+<% end %>

@@ -1,0 +1,4 @@
+<% form_for :foodtype, @foodtype, :url => { :controller => 'foodtype', :action => 'save'} do |t| %>
+  <%= t.text_field :name, :value => 'Тип питания', :onfocus => "this.value=''" %>
+  <%= submit_tag "Сохранить"%>
+<% end %>

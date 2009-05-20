@@ -1,0 +1,9 @@
+<div id="input_<%=@xnum%>">  <input id="t<%=@xnum%>" name="travel[surname_kir<%=@xnum%>]" size="30" type="text" value="<%= x %>"/></div>
+<div id="tt<%=@xnum%>" class="auto_complete"></div>
+<script type="text/javascript">
+  //<![CDATA[
+var t<%=@xnum%>_auto_completer = new Ajax.Autocompleter\('t<%=@xnum%>', 'tt<%=@xnum%>', '/travel/select_tourist', {}\)
+//]]>
+</script>
+
+

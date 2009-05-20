@@ -1,0 +1,2 @@
+<%= select("travel[travelpoint#{@nom}]","city_id", @city.collect {|p| [ p.name, p.id ] }, { :include_blank => true },{ :onchange => remote_function(:update => "hotel#{@nom}",:with => "'item=' + value",:url => { :controller => 'travelpoint',:action => 'hotel_select', :id => @nom }) }) %>
+

@@ -1,0 +1,4 @@
+<% form_for @ftype, :url => {:controller => 'foodtype', :action => 'update', :id => @ftype.id } do |f| %>
+  <%= f.text_field :name %>
+  <%= submit_tag "Сохранить" %>
+<% end %>

@@ -1,0 +1,6 @@
+<% form_for :city,@city, :url => { :controller => 'city', :action => 'save'} do |t| %>
+  <%= t.text_field :name, :value => 'Имя города', :onfocus => "this.value=''"%>
+  <%= text_field_with_auto_complete :country, :name,  { :value => 'Страна', :onfocus => "this.value=''"}, {:method => :get } %>
+    <%= submit_tag "Сохранить" %>
+
+<% end %>

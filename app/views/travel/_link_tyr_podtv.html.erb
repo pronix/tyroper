@@ -1,0 +1,6 @@
+<div id="podtv">
+  <%= link_to 'Подтверждение', :controller => 'travel', :action => 'get_file', :id => @travel.podtv_tyr %>
+  <% if User.find(session[:user]).admin? %>
+    <%= link_to "Удалить Подтверждение", :controller => 'travel', :action => 'remove_podtv_tyr', :id => @travel.id %>
+  <% end %>
+</div>

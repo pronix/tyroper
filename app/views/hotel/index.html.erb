@@ -1,0 +1,18 @@
+<%= grid(@hotel_grid) do |t| 
+  t.column :column_name => 'Название' do |c|
+    c.name
+  end
+  t.column :column_name => 'Город', :attribute_name => 'name', :model_class => City do |c|
+    c.city.name
+  end
+
+  t.column :column_name => 'Страна', :model_class => Country, :attribute_name => 'name'  do |c|
+    c.country.name
+  end
+  t.column :column_name => 'Количество поездок', :attribute_name => 'id', :model_class => Travelpoint do |c|
+    @@b = []
+    c.travelpoint.each {|x| @@b << x.id }
+    @@b.size
+  end
+end -%>
+<%= link_to "Добавить гостиницу", :controller => 'hotel', :action => 'new' %>

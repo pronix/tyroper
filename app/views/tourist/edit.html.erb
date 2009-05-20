@@ -1,0 +1,17 @@
+<% form_for :tourist, :url => { :action => 'save', :controller => 'tourist'} do |f| %>
+  <%= f.text_field  :name_kir %>
+  <%= f.text_field  :ot4_kir %>
+  <%= f.text_field  :surname_kir %>
+  <%= f.text_field  :name_lat %>
+  <%= f.text_field  :surname_lat %>
+  <%= f.select      :sex %>
+  <%= f.text_field  :borndate %>
+  <%= f.text_field  :reklama %>
+  <%= f.text_area   :pasport_ros %>
+  <%= f.text_field  :seriya_zag_pasp %>
+  <%= f.text_field  :nomer_zag_pasp %>
+  <%= f.text_field  :phone %>
+  <%= submit_tag "Сохранить" %> 
+  <%= link_to "Отменить", :back %>
+
+<% end %>

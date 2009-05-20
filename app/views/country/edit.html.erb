@@ -1,0 +1,5 @@
+<% form_for :country,@country, :url => { :controller => 'country', :action => 'save'} do |t| %>
+  <%= t.text_field :name , :value => @country.name? ? @country.name : 'Название', :onfocus => "this.value=''" %>
+<%= submit_tag "Сохранить" %> 
+<% end %>
+<%= link_to "Отменить", :action => 'index' %>

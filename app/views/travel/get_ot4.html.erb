@@ -1,0 +1,19 @@
+<%= grid(@travels) do |g| 
+  g.column :column_name => "Номер сделки" do |t|
+    t.id
+  end
+  g.column :column_name => "Плательщик" do |t|
+    t.tourist.surname_kir
+  end
+  g.column :column_name => "Цена - оператору" do |t|
+    t.cena - t.tyroperator_pay
+  end
+
+  if params['ot4']['user_id'].empty?
+    g.column :column_name => "Оператор" do |t|
+      t.user.login
+    end
+  end
+end -%>
+<p>Общая сумма <%= @summa %></p>
+<p>Зарплата <%= @summa*0.1 %></p>

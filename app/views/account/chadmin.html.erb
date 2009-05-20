@@ -1,0 +1,1 @@
+<%= link_to_remote(@user.admin? ? 'Yes' : 'No' , :update => "admin#{@user.id}", :url => {:controller => 'account', :action => 'chadmin', :id => @user.id}) %>

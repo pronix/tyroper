@@ -1,0 +1,4 @@
+<% form_for :roomtype, @roomtype, :url => { :controller => 'roomtype', :action => 'save'} do |t| %>
+  <%= t.text_field :name, :value => 'Тип комнаты', :onfocus => "this.value=''" %>
+  <%= submit_tag "Сохранить"%>
+<% end %>

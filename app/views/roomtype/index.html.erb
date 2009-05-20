@@ -1,0 +1,13 @@
+<p>
+<%= grid(@rtype_grid) do |t|
+  t.column :column_name => 'ID' do |c|
+    c.id
+  end
+
+  t.column :column_name => 'Название' do |c|
+    link_to c.name, :controller => 'roomtype', :action => 'edit', :id => c.id
+  end
+end -%>
+</p>
+  <%= link_to "Добавить тип номера", :controller => 'roomtype', :action => 'new' %>
+

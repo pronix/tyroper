@@ -1,0 +1,58 @@
+<% unless  @nom 
+then @nom = 0
+else @nom=@nom.to_i+1
+end%>
+<% fields_for :travelpoint  do |trp| %>
+
+  <p><div id="travp<%= @nom %>">
+    <table border="0" cellpadding="0" cellspacing="0" align="left">
+    <% if @nom == 0 %>
+
+      <tr>
+          <td width="120px"><span class="country">Страна</span></td>
+          <td width="120px"><span class="city">Город</span></td>
+          <td width="120px"><span class="hotel">Гостиница</span></td>
+          <td width="120px"><span class="roomtype">Тип комнаты</span></td>
+          <td width="120px"><span class="foodtype">Тип питания</span></td>
+          <td width="120px"><span class="date_start">прибытие</span></td>
+          <td width="120px"><span class="date_end">убытие</span></td>
+        </tr>
+
+      <% end %>
+
+      <tr>
+        <td>
+          <span id="country<%= @nom %>" class="country"><%= select("travel[travelpoint#{@nom}]", "country_id", Country.find(:all).collect {|p| [ p.name, p.id ] }, { :include_blank => true },{ :onchange => remote_function(:update => "city#{@nom}",:with => "'item=' + value",:url => { :controller => 'travelpoint',:action => 'city_select', :id => @nom }) }) %></span>
+          </td>
+          <td>
+            <span id="city<%= @nom %>" class="city"><%= select("travel[travelpoint#{@nom}]","city_id", City.find(:all).collect {|p| [ p.name, p.id ] }, { :include_blank => true },{ :onchange => remote_function(:update => "hotel#{@nom}",:with => "'item=' + value",:url => { :controller => 'travelpoint',:action => 'hotel_select', :id => @nom  }) }) %></span>
+            </td>
+            <td>
+              <span id="hotel<%= @nom %>" class="hotel"><%= select("travel[travelpoint#{@nom}]","hotel_id", Hotel.find(:all).collect {|p| [p.name, p.id] }, { :include_blank => true }) %></span>
+              </td>
+              <td>
+                <span id="roomtype<%= @nom %>" class="roomtype"><%= select("travel[travelpoint#{@nom}]","roomtype_id", Roomtype.find(:all).collect { |p| [p.name, p.id]}, { :include_blank => true}) %></span>
+                </td>
+                <td>
+                  <span id="foodtype<%= @nom %>" class="foodtype">
+                    <%= select("travel[travelpoint#{@nom}]","foodtype_id", Foodtype.find(:all).collect { |p| [p.name, p.id]}, { :include_blank => true}) %>
+                  </span></td>
+                  <td>
+                    <span id="date_start<%= @nom %>" class="date_start">
+                      <%= calendar_date_select_tag "travel[travelpoint#{@nom}][date_start]","date_start" %>
+                  </span>
+                  </td>
+                  <td>
+                    <span id="date_end<%= @nom %>" class="date_end">
+                      <%= calendar_date_select_tag "travel[travelpoint#{@nom}][date_end]","date_end" %>
+                  </span>
+              </td>
+            </tr>
+          </table>
+          <% if @nom > 0 %>
+            <span id="del<%=@nom%>" onclick="<%=remote_function(:update => "del#{@nom}", :url => {:controller => 'travelpoint', :action => 'remove_tp', :id => @nom })%>">Удалить</span>
+          <% end %>
+          <div id="wrap"></div>
+          </div>
+          </p>
+<% end %>

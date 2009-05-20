@@ -1,0 +1,18 @@
+<%= grid(@city_grid) do |t| 
+
+  t.column :column_name => "Название", :attribute_name => 'name' do |c|
+    c.name
+  end
+
+  t.column :column_name => "Страна", :attribute_name => 'name', :model_class => Country do |c|
+    c.country.name
+  end
+
+  t.column :column_name => "Поездок" do |c|
+    @@b = []
+    c.travelpoint.each {|x| @@b << x.travel_id }
+    @@b.uniq.size
+  end
+
+end -%>
+
