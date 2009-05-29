@@ -1,4 +1,11 @@
 <div id='user_view'>
-  <%= @tourist.id %>|<%= @tourist.name_kir %>|<%= @tourist.surname_kir %>
+  <table>
+    <tr>
+      <td><%= @tourist.id %></td>
+      <td><%= @tourist.name_kir %></td>
+      <td><%= @tourist.surname_kir %></td>
+      <td><%= link_to "Edit", :action => 'edit', :id => params[:id] %></td>
+    </tr>
+  </table>
 </div>
 

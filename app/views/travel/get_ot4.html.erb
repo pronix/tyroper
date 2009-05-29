@@ -1,4 +1,7 @@
 <%= grid(@travels) do |g| 
+  g.attributes do |t|
+    :id => "red_mark"
+  end
   g.column :column_name => "Номер сделки" do |t|
     t.id
   end

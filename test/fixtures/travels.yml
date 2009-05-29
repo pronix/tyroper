@@ -1,7 +1,15 @@
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-
-# one:
-#   column: value
-#
-# two:
-#   column: value
+<% 30.times do |x| %>
+<%= x %>:
+  cena: <%= x*100 %>
+  predoplata: <%= 80*x %>
+  predoplata_type: наличными
+  doplata: <%= 20*x %>
+  doplata_type: безналом
+  description: "трум лялляляя"
+  tyroperator_pay: <%= 30*x  %>
+  tyroper_id: 1
+  tyroper_type: безналом
+  pay_tourist_id: <%= Tourist.first.id  %> 
+  user_id: <%= if x%3 == 0 ; then 1 ; else if x%3 == 1 ; then 2 ;else 3 ;end ;end %>
+  tourists_array:
+<% end %>

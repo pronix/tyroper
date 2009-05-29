@@ -1,17 +1,68 @@
-<% form_for :tourist, :url => { :action => 'save', :controller => 'tourist'} do |f| %>
-  <%= f.text_field  :name_kir %>
-  <%= f.text_field  :ot4_kir %>
-  <%= f.text_field  :surname_kir %>
-  <%= f.text_field  :name_lat %>
-  <%= f.text_field  :surname_lat %>
-  <%= f.select      :sex %>
-  <%= f.text_field  :borndate %>
-  <%= f.text_field  :reklama %>
-  <%= f.text_area   :pasport_ros %>
-  <%= f.text_field  :seriya_zag_pasp %>
-  <%= f.text_field  :nomer_zag_pasp %>
-  <%= f.text_field  :phone %>
-  <%= submit_tag "Сохранить" %> 
-  <%= link_to "Отменить", :back %>
+<% form_for :tourist, :url => { :controller => 'tourist', :action => 'save'} do |t| %>
+  <table>
+    <tr>
+      <td><%= t.label "Фамилия кириллицей" %></td>
+      <td><%= t.label "Имя кириллицей" %></td>
+      <td><%= t.label "Отчество кириллицей" %></td>
+    </tr>
+    <tr>
+      <td><%= t.text_field :surname_kir, :value => @tourist.surname_kir %></td> 
+      <td><%= t.text_field :name_kir, :value => @tourist.name_kir %></td> 
+      <td><%= t.text_field :ot4_kir, :value => @tourist.ot4_kir %></td> 
+    </tr>
+    <tr>
+      <td><%= t.label "Имя латиница" %></td>
+      <td><%= t.label "Фамилия латиница " %></td>
+    </tr> 
+    <tr>
+      <td><%= t.text_field :name_lat, :value => @tourist.name_lat %></td> 
+      <td><%= t.text_field :surname_lat, :value => @tourist.surname_lat %></td> 
+    </tr>
+    <tr>
+      <td><%= t.label "Серия загранпаспорт" %></td>
+      <td><%= t.label "Номер загран паспорт" %></td>
+      <td><%= t.label "Выдан" %></td>
+    </tr> 
+    <tr>
+      <td><%= t.text_field :seriya_zag_pasp, :value => @tourist.seriya_zag_pasp %></td> 
+      <td><%= t.text_field :nomer_zag_pasp, :value => @tourist.nomer_zag_pasp %></td> 
+      <td><%= t.text_field :issued, :value => @tourist.issued %></td> 
+    </tr> 
+    <tr>
+      <td><%= t.label "Пол" %></td>
+      <td><%= t.label "Дата рождения" %></td>
+      <td><%= t.label "Реклама" %></td>
+    </tr> 
+    <tr>
+      <td><%= select('tourist','sex',['Женщина','Мужчина','Ребенок']) %></td>
+      <td><%= calendar_date_select_tag "tourist[borndate]", @tourist.borndate , :year_range => 80.years.ago..0.years.from_now %></td>
+      <td><%= t.text_field :reklama, :value => @tourist.reklama %></td> 
+    </tr>
+    <tr>
+      <td><%= t.label "Телефон" %></td>
+    </tr> 
+    <tr>
+      <td><%= t.text_field :phone, :value => @tourist.phone %></td> 
+    </tr> 
 
+
+          
+  </table>
+  <br />
+  <table>
+    <tr>
+
+      <td><%= t.label "Прописка" %></td>
+      <td><%= t.label "Российский паспорт" %></td>
+    </tr>
+    <tr>
+      <td><%= t.text_area :propiska, :cols => 54, :rows => 8,  :value => @tourist.propiska %></td>
+      <td><%= t.text_area :pasport_ros , :cols => 54, :rows => 8,  :value => @tourist.pasport_ros %></td>
+</tr>
+</table>
+  <br />
+  <br />
+  <br />
+   <%= submit_tag "Сохранить" %>
 <% end %>
+

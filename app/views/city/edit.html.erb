@@ -1,2 +1,6 @@
-<h1>City#edit</h1>
-<p>Find me in app/views/city/edit.html.erb</p>
+<% form_for :city,@city, :url => { :controller => 'city', :action => 'update', :id => @city.id } do |t| %>
+  <%= t.text_field :name, :value => @city.name %>
+  <%= text_field_with_auto_complete :country, :name,  { :value => @city.country.name }, {:method => :get } %>
+    <%= submit_tag "Сохранить" %>
+
+<% end %>

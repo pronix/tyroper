@@ -13,6 +13,13 @@ class CityController < ApplicationController
   end
 
   def edit
+    @city = City.find_by_id(params[:id])
+  end
+
+  def update 
+    City.update(params[:id], { :name => params[:city][:name], :country_name  => params[:country][:name] })
+    redirect_to :action => 'index'
+
   end
 
   def save

@@ -91,7 +91,10 @@
           <tr>
           </tr>
           <tr>
-            <td>Оплата оператору</td><td><%= t.text_field :tyroperator_pay, :value => @travel.tyroperator_pay  %></td>
+            <td>Оплата оператору</td>
+            <td><%= t.text_field :tyroperator_pay, :value => @travel.tyroperator_pay  %></td>
+          <td><%= select "travel", "tyroper_type",['наличными','безналом'].collect {|p| [p,p]}%></td>
+
           </tr>
           <tr>
 <td>Туроператор</td>

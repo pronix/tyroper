@@ -18,6 +18,13 @@ class TouristController < ApplicationController
   end
 
   def edit
+    @tourist = Tourist.find_by_id(params[:id])
+  end
+
+  def update 
+    Tourist.update(params[:id], params[:tourist])
+    #redirect_to :action => 'view', :id => params[:id]
+    redirect_to :action => 'index'
   end
 
   def save

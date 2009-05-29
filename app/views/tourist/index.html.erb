@@ -1,7 +1,7 @@
 <%= grid(@tourists_grid, :show_filters => :always) do |t| 
 
   t.column :column_name => 'Фамилия', :attribute_name => 'surname_kir'  do |c|
-    c.surname_kir
+    link_to c.surname_kir, :action => 'edit', :id => c.id
   end
 
   t.column :column_name => 'Имя', :attribute_name => 'name_kir'  do |c|

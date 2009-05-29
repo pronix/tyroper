@@ -21,12 +21,12 @@
     <tr>
       <td><%= t.label "Серия загранпаспорт" %></td>
       <td><%= t.label "Номер загран паспорт" %></td>
-      <td><%= t.label "Телефон" %></td>
+      <td><%= t.label "Выдан" %></td>
     </tr> 
     <tr>
       <td><%= t.text_field :seriya_zag_pasp ,  :value => 'Серия загран паспорта',       :onfocus => "this.value=''"%></td>
       <td><%= t.text_field :nomer_zag_pasp ,  :value => 'Номер загран паспорта',       :onfocus => "this.value=''"%></td>
-      <td><%= t.text_field :phone ,  :value => 'телефон',       :onfocus => "this.value=''"%></td>
+      <td><%= t.text_field :issued, :value => 'Выдан', :onfocus => "this.value=''" %></td>
     </tr> 
     <tr>
       <td><%= t.label "Пол" %></td>
@@ -35,12 +35,31 @@
     </tr> 
     <tr>
       <td><%= select('tourist','sex',['Женщина','Мужчина','Ребенок']) %></td>
-      <td><%= calendar_date_select_tag "tourist[borndate]","Дата рождения" %></td>
+      <td><%= calendar_date_select_tag "tourist[borndate]","Дата рождения" , :year_range => 80.years.ago..0.years.from_now %></td>
       <td><%= t.text_field :reklama ,  :value => 'Реклама',       :onfocus => "this.value=''"%></td>
     </tr>
+    <tr>
+      <td><%= t.label "Телефон" %></td>
+    </tr> 
+    <tr>
+      <td><%= t.text_field :phone ,  :value => 'телефон',       :onfocus => "this.value=''"%></td>
+    </tr> 
+
+
+          
   </table>
   <br />
-  <%= t.text_area :pasport_ros , :cols => 50, :rows => 10,  :value => 'Паспорт Российский',       :onfocus => "this.value=''"%>
+  <table>
+    <tr>
+
+      <td><%= t.label "Прописка" %></td>
+      <td><%= t.label "Российский паспорт" %></td>
+    </tr>
+    <tr>
+      <td><%= t.text_area :propiska, :cols => 54, :rows => 8,  :value => 'Прописка',       :onfocus => "this.value=''" %></td>
+  <td><%= t.text_area :pasport_ros , :cols => 54, :rows => 8,  :value => 'Паспорт Российский',       :onfocus => "this.value=''"%></td>
+</tr>
+</table>
   <br />
   <br />
   <br />

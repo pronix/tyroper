@@ -1,5 +1,4 @@
 require 'rubygems'
-#require 'prawn'
 require 'odf/spreadsheet'
 class TravelController < ApplicationController
   before_filter :admin_required, :only => [:save_podtv, :save_plat, :save_s4et, :summ, :get_ot4, :remove_platezhka, :remove_podtv, :remove_s4et]
@@ -63,7 +62,8 @@ class TravelController < ApplicationController
           :doplata_type => params['travel']['doplata_type'],
           :cena => params['travel']['cena'],
           :tyroperator_pay => params['travel']['tyroperator_pay'],
-          :tyroper_id => params['travel']['tyroper_id']
+          :tyroper_id => params['travel']['tyroper_id'],
+          :tyroper_type => params['travel']['tyroper_type']
         }.each do |key,val|
           @travel[key] = val
         end 
@@ -268,7 +268,12 @@ class TravelController < ApplicationController
                                 :conditions => ['id = ?', @tid.collect {|x| x.id }],
                                 :include => :user)
      @summa = 0
-     @tid.each {|x| @summa += (x.cena - x.tyroperator_pay) }
+#     @tid.each {|x| @summa += (x.cena - x.tyroperator_pay) }
+     @tid.each do |x|
+       if x.cena == x.predoplata + x.doplata
+         @summa += (x.cena - x.tyroperator_pay)
+       end
+     end
 
    end
 
