@@ -63,7 +63,8 @@ class TravelController < ApplicationController
           :cena => params['travel']['cena'],
           :tyroperator_pay => params['travel']['tyroperator_pay'],
           :tyroper_id => params['travel']['tyroper_id'],
-          :tyroper_type => params['travel']['tyroper_type']
+          :tyroper_type => params['travel']['tyroper_type'],
+          :start => params['travel']['start']
         }.each do |key,val|
           @travel[key] = val
         end 
@@ -263,14 +264,14 @@ class TravelController < ApplicationController
        @@user_q = ''
      end
 
-     @tid = Travel.find_by_sql("select t.id,t.cena,t.tyroperator_pay from travels t,travelpoints tp where #{@@user_q} t.id = tp.travel_id and date_part('month', tp.date_start) = #{params['date']['month']} and date_part('year', tp.date_start) = #{params['date']['year']}") # запрос ищет по месяцу и году и пользователю - специфичен для postgresql
+     @tid = Travel.find_by_sql("select t.id,t.cena,t.tyroperator_pay,t.predoplata,t.doplata from travels t,travelpoints tp where #{@@user_q} t.id = tp.travel_id and date_part('month', tp.date_start) = #{params['date']['month']} and date_part('year', tp.date_start) = #{params['date']['year']}") # запрос ищет по месяцу и году и пользователю - специфичен для postgresql
      @travels = initialize_grid(Travel,
                                 :conditions => ['id = ?', @tid.collect {|x| x.id }],
                                 :include => :user)
      @summa = 0
 #     @tid.each {|x| @summa += (x.cena - x.tyroperator_pay) }
      @tid.each do |x|
-       if x.cena == x.predoplata + x.doplata
+       if x.cena == x.summa and x.tyroperator_pay
          @summa += (x.cena - x.tyroperator_pay)
        end
      end
@@ -313,6 +314,8 @@ class TravelController < ApplicationController
      end
      @start_date = @travel.travelpoint.minimum('date_start')
      @end_date = @travel.travelpoint.maximum('date_end')
+     File.delete "public/files/zayavka#{@travel.id}.ods" rescue ''
+     File.delete "public/files/dogovor#{@travel.id}.ods" rescue ''
     render :partial => 'travel/template_zayavka', :layout => nil 
 
    end
@@ -359,10 +362,10 @@ class TravelController < ApplicationController
          table.row.cell 'г.Калининград' ,:number_columns_spanned => 2
          table.row
          table.row do |row|
-           row.cell 'Сторона, именуемая в договоре "Турагент": ' + @c.name + "\n" + @c.yur_adress + "\n" + @c.fiz_adress + "\n" + @c.phone + ' ОГРН ' + @c.ogrn + "\n ИНН/КПП "+ @c.inn + '/' + @c.kpp + "\n" + @c.r_s4 + "\n"+ @c.bank + "\n" + @c.bik + "\n" + @c.director,  :number_columns_spanned => 7
+           row.cell 'Сторона, именуемая в договоре "Турагент": ' + @c.rekvizit , :number_columns_spanned => 7
          end
          table.row do |row|
-           row.cell 'Сторона, именуемая в договоре "Турист": ' + @travel.tourist.surname_kir + ' ' + @travel.tourist.name_kir + ' ' + @travel.tourist.ot4_kir + "\n", :number_columns_spanned => 7
+           row.cell 'Сторона, именуемая в договоре "Турист": ' + @travel.tourist.rekvizit , :number_columns_spanned => 7
          end
          table.row
          table.row do |row|
@@ -493,7 +496,6 @@ class TravelController < ApplicationController
        end
      end
      send_file "public/files/zayavka#{@travel.id}.ods"
-#       File.delete "public/files/zayavka#{@travel.id}.ods"
    end
 
    def get_dogovor_ods
@@ -501,12 +503,6 @@ class TravelController < ApplicationController
      @c = Customer.first
 
      ODF::SpreadSheet.file("public/files/dogovor#{@travel.id}.ods") do |spreadsheet|
-#       spreadsheet.style 'red-cell', :family => :cell do |style|
-#         style.property :cell ,  'table:number-columns-spanned' => 2, 'table:number-rows-spanned' => 1
-#       end
-#       spreadsheet.style 'cust2', :family => :cell do |style|
-#         style.property :cell, 'border' => '0.0138in solid #000000'
-#       end
        spreadsheet.table 'Договор' do |table|
          table.row do |row|
            row.cell 
@@ -525,9 +521,9 @@ class TravelController < ApplicationController
          end
          table.row
          table.row do |row|
-           row.cell "Сторона, именуемая в Договоре «Турагент»: #{@c.director}", :number_columns_spanned => 8
+           row.cell "Сторона, именуемая в Договоре «Турагент»: #{@c.rekvizit}", :number_columns_spanned => 8
          end
-         table.row.cell "Сторона, именуемая в Договоре «Турист»: #{@travel.tourist.surname_kir + " " + @travel.tourist.name_kir + " " + @travel.tourist.ot4_kir},паспорт \n гражданина РФ #{@travel.tourist.pasport_ros}, адрес местожительства: _______________________________________________ тел. #{@travel.tourist.phone}" , :number_columns_spanned => 8
+         table.row.cell "Сторона, именуемая в Договоре «Турист»: " + @travel.tourist.rekvizit, :number_columns_spanned => 8
          @@f = File.open('app/views/travel/_dogovor.html.erb')
          @@f.each_line do |str|
            if str =~ /^zzzZZZ/

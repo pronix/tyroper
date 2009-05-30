@@ -352,3 +352,7 @@ div.auto_complete ul strong.highlight {
   display: block;
   margin:13px -20px -20px -20px;
 }
+
+.red_mark {
+  background-color:#FF0000;
+}

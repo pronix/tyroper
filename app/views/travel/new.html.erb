@@ -67,6 +67,11 @@
 <div id="wrap">
 </div>
 <table>
+  <tr>
+    <td>Дата отъезда</td>
+    <td><%= calendar_date_select_tag "travel[start]","Дата отъезда" , :year_range => 0.years.ago..1.years.from_now %></td> 
+
+  </tr>
   <tr><td>Цена</td><td><%= t.text_field :cena, :id => 'cena' %></td></tr></table><br />
   <div id="platezhi">
     <table>

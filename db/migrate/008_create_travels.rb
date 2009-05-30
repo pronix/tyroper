@@ -10,6 +10,7 @@ class CreateTravels < ActiveRecord::Migration
       t.integer :tyroperator_pay # оплата оператору
       t.integer :tyroper_id
       t.text :tyroper_type
+      t.date :start
       # документы туриста
       t.integer :podtv # id загруженого файла 
       t.integer :s4et # id загруженого файла

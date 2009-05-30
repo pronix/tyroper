@@ -1,6 +1,10 @@
 <%= grid(@travels) do |g| 
-  g.attributes do |t|
-    :id => "red_mark"
+  g.row_attributes do |t|
+    unless t.cena == t.summa and t.tyroperator_pay
+      { :class => "red_mark" }
+    else
+      { :class => ""}
+    end
   end
   g.column :column_name => "Номер сделки" do |t|
     t.id

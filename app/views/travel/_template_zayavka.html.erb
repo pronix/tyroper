@@ -21,12 +21,14 @@
 <FONT SIZE=1 STYLE="font-size: 7pt"><B>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ПРИЛОЖЕНИЕ №1 К ДОГОВОРУ <%= @travel.id %> </B></FONT></P>
 <P LANG="ru-RU" CLASS="western" STYLE="margin-bottom: 0in"><FONT FACE="Arial, sans-serif"><FONT SIZE=1><B>г.
       Калининград    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   от "<%= @travel.created_at.mday%>" <%= @month%> <%= @travel.created_at.year %> г.</B></FONT></FONT><FONT FACE="Arial, sans-serif"><FONT SIZE=1><BR></FONT></FONT><FONT FACE="Arial, sans-serif"><FONT SIZE=1><B>Сторона,
-именуемая в договоре &quot;Турагент&quot;: <%= @travel.tourist.surname_kir + ' ' + @travel.tourist.name_kir + ' '%> <%= if @travel.tourist.pasport_ros then @travel.tourist.pasport_ros ;   end;%> 
+      именуемая в договоре &quot;Турагент&quot;: <%= Customer.first.rekvizit %>
 </B></FONT></FONT><FONT FACE="Arial, sans-serif"><FONT SIZE=1><BR></FONT></FONT><BR>
 </P>
 
 <P LANG="ru-RU" CLASS="western" STYLE="margin-bottom: 0in"><FONT FACE="Arial, sans-serif"><FONT SIZE=1><BR></FONT></FONT><FONT FACE="Arial, sans-serif"><FONT SIZE=1><B>Сторона,
-именуемая в договоре &quot;Турист&quot;:</B></FONT></FONT><FONT FACE="Arial, sans-serif"><FONT SIZE=1><BR></FONT></FONT><BR>
+      именуемая в договоре &quot;Турист&quot;:
+      <%= @travel.tourist.rekvizit %>
+</B></FONT></FONT><FONT FACE="Arial, sans-serif"><FONT SIZE=1><BR></FONT></FONT><BR>
 </P>
 <P LANG="ru-RU" CLASS="western" STYLE="margin-bottom: 0in"><BR>
 </P>

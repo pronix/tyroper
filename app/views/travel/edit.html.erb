@@ -68,7 +68,14 @@
     }
   </script>
   <!-- все отели добавлены-->
+  <table>
+    <tr>
+      <td>Дата отъезда</td>
+      <td><%= calendar_date_select_tag "travel[start]", @travel.start , :year_range => 0.years.ago..1.years.from_now %></td>
+  </tr>
+</table>
   <p>Цена<input id="cena" name="travel[cena]" size="30" type="text" value="<%= @travel.cena %>"/></p>
+  
   <div id="platezhi">
     
     <table>
@@ -100,7 +107,8 @@
 <td>Туроператор</td>
             <td>
             <select id="travel_tyroper_id" name="travel[tyroper_id]">
-              <%= options_for_select Tyroper.all.collect {|x| [x.name, x.id]}, @travel.tyroper.name %>
+              <%= options_for_select Tyroper.all.collect {|x| [x.name, x.id]}, 
+                @travel.tyroper.name %>
               </td>
           </tr> 
       </table>

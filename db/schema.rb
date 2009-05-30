@@ -106,6 +106,7 @@ ActiveRecord::Schema.define(:version => 12) do
     t.integer  "tyroperator_pay"
     t.integer  "tyroper_id"
     t.text     "tyroper_type"
+    t.date     "start"
     t.integer  "podtv"
     t.integer  "s4et"
     t.integer  "platezhka"
