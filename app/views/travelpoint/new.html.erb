@@ -5,8 +5,8 @@ end%>
 <% fields_for :travelpoint  do |trp| %>
 
   <p><div id="travp<%= @nom %>">
-    <table border="0" cellpadding="0" cellspacing="0" align="left">
     <% if @nom == 0 %>
+    <table border="0" cellpadding="0" cellspacing="0" align="left">
 
       <tr>
           <td width="120px"><span class="country">Страна</span></td>
@@ -17,8 +17,10 @@ end%>
           <td width="120px"><span class="date_start">прибытие</span></td>
           <td width="120px"><span class="date_end">убытие</span></td>
         </tr>
+        </table>
 
       <% end %>
+    <table border="0" cellpadding="0" cellspacing="0" align="left">
 
       <tr>
         <td>
