@@ -7,27 +7,27 @@
 
     <span id="country<%= @tp %>" class="country">
       <select id="travel_travelpoint<%=@tp%>_country_id" onchange="new Ajax.Updater('city<%=@tp%>', '/travelpoint/city_select/<%=@tp%>', {asynchronous:true, evalScripts:true, parameters:'item=' + value + '&authenticity_token=' + encodeURIComponent('a9Q/Hjrw3ePyGTWSakn3ilrjR76G+e6XdGJtlFmPqek=')})" name="travel[travelpoint<%=@tp%>][country_id]">
-        <%=options_for_select(Country.find(:all).collect {|p| [p.name,p.id]}, @travelp.country.id )%>
+        <%=options_for_select(Country.find(:all).collect {|p| [p.name[0..21],p.id]}, @travelp.country.id )%>
     </select>
   </span>
         <span id="city<%= @tp %>" class="city">
           <select id="travel_travelpoint<%= @tp %>_city_id" onchange="new Ajax.Updater('hotel<%= @tp %>', '/travelpoint/hotel_select/<%= @tp %>', {asynchronous:true, evalScripts:true, parameters:'item=' + value + '&authenticity_token=' + encodeURIComponent('a9Q/Hjrw3ePyGTWSakn3ilrjR76G+e6XdGJtlFmPqek=')})" name="travel[travelpoint<%= @tp%>][city_id]">
-            <%=options_for_select(City.find(:all, :conditions => ["country_id = ?", @travelp.country.id ]).collect {|p| [p.name,p.id]}, @travelp.city.id )%>
+            <%=options_for_select(City.find(:all, :conditions => ["country_id = ?", @travelp.country.id ]).collect {|p| [p.name[0..21],p.id]}, @travelp.city.id )%>
         </select>
       </span>
       <span id="hotel<%= @tp %>" class="hotel">
         <select id="travel_travelpoint<%=@tp%>_hotel_id" name="travel[travelpoint<%=@tp%>][hotel_id]">
-          <%=options_for_select(Hotel.find(:all, :conditions => ["city_id = ?", @travelp.city.id ]).collect {|p| [p.name,p.id]}, @travelp.hotel.id )%>
+          <%=options_for_select(Hotel.find(:all, :conditions => ["city_id = ?", @travelp.city.id ]).collect {|p| [p.name[0..21],p.id]}, @travelp.hotel.id )%>
         </select>
   </span>
   <span id="roomtype<%= @tp %>" class="roomtype">
     <select id="travel_travelpoint<%=@tp%>_roomtype_id" name="travel[travelpoint<%=@tp%>][roomtype_id]">
-      <%=options_for_select(Roomtype.find(:all).collect {|p| [p.name,p.id]}, @travelp.roomtype_id )%>
+      <%=options_for_select(Roomtype.find(:all).collect {|p| [p.name[0..21],p.id]}, @travelp.roomtype_id )%>
     </select>
   </span>
   <span id="foodtype<%= @tp %>" class="foodtype">
     <select id="travel_travelpoint<%= @tp %>_foodtype_id" name="travel[travelpoint<%= @tp%>][foodtype_id]">
-      <%=options_for_select(Foodtype.find(:all).collect {|p| [p.name,p.id]}, @travelp.foodtype_id )%>
+      <%=options_for_select(Foodtype.find(:all).collect {|p| [p.name[0..21],p.id]}, @travelp.foodtype_id )%>
     </select>
   </span>
   <span id="date_start<%= @tp %>" class="date_start">

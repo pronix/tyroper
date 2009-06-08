@@ -31,18 +31,20 @@
     <tr>
       <td><%= t.label "Пол" %></td>
       <td><%= t.label "Дата рождения" %></td>
-      <td><%= t.label "Реклама" %></td>
+      <td><%= t.label "Загран паспорт действ. до" %></td>
     </tr> 
     <tr>
       <td><%= select('tourist','sex',['Женщина','Мужчина','Ребенок']) %></td>
       <td><%= calendar_date_select_tag "tourist[borndate]","Дата рождения" , :year_range => 80.years.ago..0.years.from_now %></td>
-      <td><%= t.text_field :reklama ,  :value => 'Реклама',       :onfocus => "this.value=''"%></td>
+      <td><%= calendar_date_select_tag 'tourist[actual_date_zag]',"Загран паспорт действ до", :year_range => 1.years.ago..10.years.from_now)%></td>
     </tr>
     <tr>
       <td><%= t.label "Телефон" %></td>
+      <td><%= t.label "Реклама" %></td>
     </tr> 
     <tr>
       <td><%= t.text_field :phone ,  :value => 'телефон',       :onfocus => "this.value=''"%></td>
+      <td><%= t.text_field :reklama ,  :value => 'Реклама',       :onfocus => "this.value=''"%></td>
     </tr> 
 
 

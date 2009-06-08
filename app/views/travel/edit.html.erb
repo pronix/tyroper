@@ -133,16 +133,16 @@
 <fieldset>   <legend>Документы туриста </legend>
 <% if @travel.podtv %>
   <%= render :partial => 'travel/link_podtv' %>
-  <% if @travel.platezhka %>
-     <%= render :partial => 'travel/link_platezhka' %>
-         <% if @travel.s4et %>
-           <%= render :partial => 'travel/link_s4et' %>
-         <% else %>
-            <%= render :partial => 'travel/upload_s4et' %>
-         <%end%>
-   <% else %>  
-        <%= render :partial => 'travel/upload_platezhka' %>
-   <% end %>
+  <% if @travel.s4et %>
+    <%= render :partial => 'travel/link_s4et' %>
+    <% if @travel.platezhka %>
+      <%= render :partial => 'travel/link_platezhka' %>
+    <% else %>
+      <%= render :partial => 'travel/upload_platezhka' %>
+    <%end%>
+<% else %>  
+  <%= render :partial => 'travel/upload_s4et' %>
+<% end %>
 <% else %>
    <%= render :partial => 'travel/upload_portv' %>
  <% end %>
@@ -150,15 +150,15 @@
 <fieldset>   <legend>Документы туроператора</legend>  
   <% if @travel.podtv_tyr %>
     <%= render :partial => 'travel/link_tyr_podtv' %>
-    <% if @travel.platezhka_tyr %>
-      <%= render :partial => 'travel/link_tyr_platezhka' %>
-      <% if @travel.s4et_tyr %>
+    <% if @travel.s4et_tyr %>
       <%= render :partial => 'travel/link_tyr_s4et' %>
+      <% if @travel.platezhka_tyr %>
+      <%= render :partial => 'travel/link_tyr_platezhka' %>
     <% else %>
-    <%= render :partial => 'travel/upload_tyr_s4et' %>
+<%= render :partial => 'travel/upload_tyr_platezhka' %>
   <%end%>
 <% else %>  
-<%= render :partial => 'travel/upload_tyr_platezhka' %>
+    <%= render :partial => 'travel/upload_tyr_s4et' %>
 <% end %>
 <% else %>
 <%= render :partial => 'travel/upload_tyr_portv' %>
