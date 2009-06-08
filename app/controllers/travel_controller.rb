@@ -460,6 +460,15 @@ class TravelController < ApplicationController
              row.cell '', :style => 'cust2'
            end
          end
+         # информация о туроператоре
+
+         table.row
+         table.row.cell '5. Информация о туроператоре - непосредственном исполнителе услуг,входящих в турпродукт:'
+         table.row do |row|
+           row.cell @travel.tyroper.info ,:style => 'cust2',:number_columns_spanned => 7, :number_rows_spanned => 3
+
+         end
+         #
          table.row
          table.row.cell '6. Дополнительно: '
          ['Встречи:','Проводы:','Сопровождение:',"Минимальное количество человек в группе, необходимое для совершения\n путешествия (по условиям групповых и экскурсионных\n программ туроператора)"].each do |x|
