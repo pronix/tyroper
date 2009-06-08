@@ -1,7 +1,6 @@
 class CityController < ApplicationController
   auto_complete_for :country, :name
   def index
-#    @city = City.find(:all)
     @city_grid = initialize_grid(City,
                                 :per_page => 20,
                                 :include => :country,

@@ -265,21 +265,19 @@ class TravelController < ApplicationController
      end
 
      @tid = Travel.find_by_sql("select t.id,t.cena,t.tyroperator_pay,t.predoplata,t.doplata from travels t,travelpoints tp where #{@@user_q} t.id = tp.travel_id and date_part('month', tp.date_start) = #{params['date']['month']} and date_part('year', tp.date_start) = #{params['date']['year']}") # запрос ищет по месяцу и году и пользователю - специфичен для postgresql
+     #@tid = Travel.find_by_sql("select t.id,t.cena,t.tyroperator_pay from travels t,travelpoints tp where #{@@user_q} t.id = tp.travel_id and date_part('month', tp.date_start) = #{params['date']['month']} and date_part('year', tp.date_start) = #{params['date']['year']}") # запрос ищет по месяцу и году и пользователю - специфичен для postgresql
      @travels = initialize_grid(Travel,
                                 :conditions => ['id = ?', @tid.collect {|x| x.id }],
                                 :include => :user)
      @summa = 0
-#     @tid.each {|x| @summa += (x.cena - x.tyroperator_pay) }
      @tid.each do |x|
        if x.cena == x.summa and x.tyroperator_pay
          @summa += (x.cena - x.tyroperator_pay)
        end
      end
-
    end
 
    def find_by_tourist
-     # {"commit"=>"Найти", "authenticity_token"=>"YrzTZ/ItHfJTRcXV9PldA8Z6VJe9b4XZDzliiFuzFj0=", "travel"=>{"surname_kir"=>"surname_kir_49 name_kir_49"}}
      
      @tourist = Tourist.find(:all, :conditions => ['surname_kir =? and name_kir = ?',  params['travel']['surname_kir'].split(' ')[0] , params['travel']['surname_kir'].split(' ')[1]])
      @travels_grid = initialize_grid(Travel, 

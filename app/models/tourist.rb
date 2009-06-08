@@ -13,6 +13,4 @@ class Tourist < ActiveRecord::Base
   def rekvizit 
     "#{self.surname_kir} #{self.name_kir} #{self.ot4_kir},\nпаспорт гражданина РФ #{self.pasport_ros },\n адрес места жительства: #{self.propiska}\n тел. #{self.phone }"
   end
-
-
 end
