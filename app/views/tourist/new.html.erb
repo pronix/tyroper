@@ -36,7 +36,7 @@
     <tr>
       <td><%= select('tourist','sex',['Женщина','Мужчина','Ребенок']) %></td>
       <td><%= calendar_date_select_tag "tourist[borndate]","Дата рождения" , :year_range => 80.years.ago..0.years.from_now %></td>
-      <td><%= calendar_date_select_tag 'tourist[actual_date_zag]',"Загран паспорт действ до", :year_range => 1.years.ago..10.years.from_now)%></td>
+      <td><%= calendar_date_select_tag 'tourist[actual_date_zag]',"Загран паспорт действ до", :year_range => 1.years.ago..10.years.from_now%></td>
     </tr>
     <tr>
       <td><%= t.label "Телефон" %></td>
