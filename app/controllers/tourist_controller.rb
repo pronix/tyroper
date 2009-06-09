@@ -31,7 +31,7 @@ class TouristController < ApplicationController
   end
 
   def save
-    if params[:id].empty?
+    unless params[:id]
       @newt = Tourist.new(params[:tourist])
       @newt.user_id = session[:user]
     else

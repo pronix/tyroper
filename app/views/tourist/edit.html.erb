@@ -1,4 +1,4 @@
-<% form_for :tourist, :url => { :controller => 'tourist', :action => 'save'} do |t| %>
+<% form_for :tourist, :url => { :controller => 'tourist', :action => 'update', :id => @tourist.id} do |t| %>
   <table>
     <tr>
       <td><%= t.label "Фамилия кириллицей" %></td>
@@ -39,9 +39,11 @@
       <td><%= t.text_field :reklama, :value => @tourist.reklama %></td> 
     </tr>
     <tr>
+      <td><%= t.label "Загран паспорт действ. до" %></td>
       <td><%= t.label "Телефон" %></td>
     </tr> 
     <tr>
+      <td><%= calendar_date_select_tag 'tourist[actual_date_zag]', @tourist.actual_date_zag, :year_range => 1.years.ago..10.years.from_now%></td>
       <td><%= t.text_field :phone, :value => @tourist.phone %></td> 
     </tr> 
 

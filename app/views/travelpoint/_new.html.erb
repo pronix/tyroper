@@ -22,20 +22,20 @@ end%>
     <table border="0" cellpadding="0" cellspacing="0" align="left">
       <tr>
         <td width="120px">
-          <span id="country<%= @nom %>" class="country"><%= select("travel[travelpoint#{@nom}]", "country_id", Country.find(:all).collect {|p| [ p.name, p.id ] }, { :include_blank => true },{ :onchange => remote_function(:update => "city#{@nom}",:with => "'item=' + value",:url => { :controller => 'travelpoint',:action => 'city_select', :id => @nom }) }) %></span>
+          <span id="country<%= @nom %>" class="country"><%= select("travel[travelpoint#{@nom}]", "country_id", Country.find(:all).collect {|p| [ p.name[0..21], p.id ] }, { :include_blank => true },{ :onchange => remote_function(:update => "city#{@nom}",:with => "'item=' + value",:url => { :controller => 'travelpoint',:action => 'city_select', :id => @nom }) }) %></span>
           </td>
           <td width="120px">
-            <span id="city<%= @nom %>" class="city"><%= select("travel[travelpoint#{@nom}]","city_id", City.find(:all).collect {|p| [ p.name, p.id ] }, { :include_blank => true },{ :onchange => remote_function(:update => "hotel#{@nom}",:with => "'item=' + value",:url => { :controller => 'travelpoint',:action => 'hotel_select', :id => @nom  }) }) %></span>
+            <span id="city<%= @nom %>" class="city"><%= select("travel[travelpoint#{@nom}]","city_id", City.find(:all).collect {|p| [ p.name[0..21], p.id ] }, { :include_blank => true },{ :onchange => remote_function(:update => "hotel#{@nom}",:with => "'item=' + value",:url => { :controller => 'travelpoint',:action => 'hotel_select', :id => @nom  }) }) %></span>
             </td>
             <td width="120px">
-              <span id="hotel<%= @nom %>" class="hotel"><%= select("travel[travelpoint#{@nom}]","hotel_id", Hotel.find(:all).collect {|p| [p.name, p.id] }, { :include_blank => true }) %></span>
+              <span id="hotel<%= @nom %>" class="hotel"><%= select("travel[travelpoint#{@nom}]","hotel_id", Hotel.find(:all).collect {|p| [p.name[0..21], p.id] }, { :include_blank => true }) %></span>
               </td>
               <td width="120px">
-                <span id="roomtype<%= @nom %>" class="roomtype"><%= select("travel[travelpoint#{@nom}]","roomtype_id", Roomtype.find(:all).collect { |p| [p.name, p.id]}, { :include_blank => true}) %></span>
+                <span id="roomtype<%= @nom %>" class="roomtype"><%= select("travel[travelpoint#{@nom}]","roomtype_id", Roomtype.find(:all).collect { |p| [p.name[0..21], p.id]}, { :include_blank => true}) %></span>
                 </td>
                 <td width="120px">
                   <span id="foodtype<%= @nom %>" class="foodtype">
-                    <%= select("travel[travelpoint#{@nom}]","foodtype_id", Foodtype.find(:all).collect { |p| [p.name, p.id]}, { :include_blank => true}) %>
+                    <%= select("travel[travelpoint#{@nom}]","foodtype_id", Foodtype.find(:all).collect { |p| [p.name[0..21], p.id]}, { :include_blank => true}) %>
                   </span></td>
                   <td width="120px">
                     <span id="date_start<%= @nom %>" class="date_start">

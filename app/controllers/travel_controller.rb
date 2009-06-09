@@ -308,7 +308,7 @@ class TravelController < ApplicationController
      @users = []
      @users << @travel.tourist
      if @travel.tourists_array
-       @users << Tourist.find(@travel.tourists_array) 
+       Tourist.find(@travel.tourists_array.split(',')).each {|x| @users << x} 
      end
      @start_date = @travel.travelpoint.minimum('date_start')
      @end_date = @travel.travelpoint.maximum('date_end')
@@ -338,7 +338,7 @@ class TravelController < ApplicationController
      @users = []
      @users << @travel.tourist
      if @travel.tourists_array
-       @users << Tourist.find(@travel.tourists_array)
+       Tourist.find(@travel.tourists_array.split(',')).each {|x| @users << x}
      end
      @start_date = @travel.travelpoint.minimum('date_start')
      @end_date = @travel.travelpoint.maximum('date_end')
