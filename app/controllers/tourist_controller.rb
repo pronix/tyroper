@@ -9,6 +9,7 @@ class TouristController < ApplicationController
   end
 
   def new
+    @tourist = Tourist.new
   end
 
   def edit
